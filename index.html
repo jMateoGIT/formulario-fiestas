@@ -14,16 +14,16 @@
 <body>
   <h2>Solicitud de días de fiesta</h2>
   <form id="formFiestas">
-    <label>Número de empleado:</label>
+    <label for="Empleado">Número de empleado:</label>
     <input type="text" id="Empleado" required />
 
-    <label>Correo electrónico:</label>
+    <label for="Email">Correo electrónico:</label>
     <input type="email" id="Email" required />
 
-    <label>Fechas solicitadas (separadas por coma):</label>
+    <label for="FechasSolicitadas">Fechas solicitadas (separadas por coma):</label>
     <input type="text" id="FechasSolicitadas" placeholder="ej. 14/04/2025, 15/04/2025" required />
 
-    <label>Comentario:</label>
+    <label for="Comentario">Comentario:</label>
     <textarea id="Comentario"></textarea>
 
     <button type="submit">Enviar solicitud</button>
@@ -31,42 +31,48 @@
   </form>
 
   <script>
-    document.getElementById("formFiestas").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const respuesta = document.getElementById("respuesta");
-      respuesta.textContent = "";
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("formFiestas");
 
-      const body = {
-        Empleado: document.getElementById("Empleado").value,
-        Email: document.getElementById("Email").value,
-        FechasSolicitadas: document.getElementById("FechasSolicitadas").value,
-        Comentario: document.getElementById("Comentario").value
-      };
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const respuesta = document.getElementById("respuesta");
+        respuesta.textContent = "";
 
-      console.log("Enviando solicitud con datos:", body);
+        // Primero declaramos body
+        const body = {
+          Empleado: document.getElementById("Empleado").value,
+          Email: document.getElementById("Email").value,
+          FechasSolicitadas: document.getElementById("FechasSolicitadas").value,
+          Comentario: document.getElementById("Comentario").value
+        };
 
-      try {
-        const res = await fetch("https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body)
-        });
+        // Ahora sí, podemos imprimirlo
+        console.log("Enviando solicitud con datos:", body);
 
-        console.log("Respuesta recibida:", res.status);
+        try {
+          const res = await fetch("https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          });
 
-        if (res.ok) {
-          respuesta.textContent = "✅ Solicitud enviada correctamente.";
-          respuesta.className = "success";
-          document.getElementById("formFiestas").reset();
-        } else {
-          respuesta.textContent = "❌ Error al enviar la solicitud.";
+          console.log("Respuesta recibida:", res.status);
+
+          if (res.ok) {
+            respuesta.textContent = "✅ Solicitud enviada correctamente.";
+            respuesta.className = "success";
+            form.reset();
+          } else {
+            respuesta.textContent = "❌ Error al enviar la solicitud.";
+            respuesta.className = "error";
+          }
+        } catch (err) {
+          console.error("Error de conexión:", err);
+          respuesta.textContent = "⚠️ Error de conexión.";
           respuesta.className = "error";
         }
-      } catch (err) {
-        console.error("Error de conexión:", err);
-        respuesta.textContent = "⚠️ Error de conexión.";
-        respuesta.className = "error";
-      }
+      });
     });
   </script>
 </body>
