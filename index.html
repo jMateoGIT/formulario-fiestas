@@ -8,8 +8,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" />
   <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
-  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
-
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js/dist/l10n/es.js"></script>
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
@@ -132,21 +131,20 @@
   <div class="page-content">
     <div class="form-container">
       <h2>Solicitud de días de fiesta</h2>
-      <form id="formFiestas" autocomplete="off">
-        <input type="text" name="fake_autofill" style="display:none">
+      <form id="formFiestas">
         <label for="Empleado">Número de empleado:</label>
-        <input type="text" id="Empleado" name="empleadoID" required />
+        <input type="text" id="Empleado" required />
 
         <label for="Email">Correo electrónico:</label>
-        <input type="email" id="Email" required />
+        <input type="email" id="Email" name="usuarioContacto" autocomplete="off" required />
 
         <label for="Fechas">Fechas solicitadas:</label>
-        <input type="text" id="Fechas" name="diasDeseados" placeholder="Selecciona múltiples fechas..." required autocomplete="off" />
+        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." required />
 
         <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
         <label for="Comentario">Comentario:</label>
-        <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
+        <textarea id="Comentario" name="comentarioExtra" autocomplete="off" rows="4" placeholder="Opcional..."></textarea>
 
         <button type="submit">Enviar solicitud</button>
         <p id="respuesta"></p>
