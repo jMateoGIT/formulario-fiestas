@@ -36,13 +36,14 @@
       const respuesta = document.getElementById("respuesta");
       respuesta.textContent = "";
 
-    console.log("Enviando solicitud con datos:", body);
       const body = {
         Empleado: document.getElementById("Empleado").value,
         Email: document.getElementById("Email").value,
         FechasSolicitadas: document.getElementById("FechasSolicitadas").value,
-        Comenario: document.getElementById("Comentario").value
+        Comentario: document.getElementById("Comentario").value
       };
+
+      console.log("Enviando solicitud con datos:", body);
 
       try {
         const res = await fetch("https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE", {
@@ -51,7 +52,7 @@
           body: JSON.stringify(body)
         });
 
-      console.log("Respuesta recibida:", res.status);
+        console.log("Respuesta recibida:", res.status);
 
         if (res.ok) {
           respuesta.textContent = "✅ Solicitud enviada correctamente.";
@@ -62,6 +63,7 @@
           respuesta.className = "error";
         }
       } catch (err) {
+        console.error("Error de conexión:", err);
         respuesta.textContent = "⚠️ Error de conexión.";
         respuesta.className = "error";
       }
@@ -69,3 +71,4 @@
   </script>
 </body>
 </html>
+
