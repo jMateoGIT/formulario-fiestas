@@ -19,7 +19,7 @@ return;
 }
 document.getElementById("FechasSolicitadas").value = fechas.join(", ");
 const body = {
-Empleado: document.getElementById("Empleado").value.trim(),
+Empleado: document.getElementById("NumeroJDE").value.trim(),
 Email: document.getElementById("Email").value.trim(),
 FechasSolicitadas: fechas.join(", "),
 Comentario: document.getElementById("Comentario").value.trim()
