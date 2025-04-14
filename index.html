@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,29 +6,24 @@
   <title>Solicitud de Días de Fiesta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
     html, body {
-      height: 100%;
-      margin: 0;
-    }
+  height: 100%;
+  margin: 0;
+}
 
-    body {
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
+      padding: 6rem 2rem 2rem 2rem; /* espacio extra arriba por la cabecera fija */
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .dark-mode {
-      background-color: #1e1e1e;
-      color: #ffffff;
+      justify-content: center;
     }
 
     .header {
@@ -46,17 +42,7 @@
     }
 
     .header img {
-      height: 30px;
-    }
-
-    .page-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      margin-top: 5rem;
+      height: 40px;
     }
 
     .form-container {
@@ -67,24 +53,12 @@
       max-width: 500px;
       width: 100%;
       border-top: 8px solid #DA291C;
-      transition: background-color 0.3s;
-    }
-
-    .dark-mode .form-container {
-      background-color: #2a2a2a;
     }
 
     h2 {
       text-align: center;
       color: #5F2167;
       margin-bottom: 1.5rem;
-    }
-
-    .dark-mode h2,
-    .dark-mode label,
-    .dark-mode .success,
-    .dark-mode .error {
-      color: #ffffff;
     }
 
     label {
@@ -105,14 +79,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .dark-mode input,
-    .dark-mode textarea {
-      background-color: #3a3a3a;
-      color: #ffffff;
-      border: 1px solid #555;
     }
 
     .fechaItem {
@@ -163,43 +129,10 @@
       text-align: center;
     }
 
-    .toggle-theme {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      background-color: #5F2167;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      z-index: 2000;
-    }
-
-    .toggle-theme:hover {
-      background-color: #4a1851;
-    }
-
-    footer {
-      margin-top: 3rem;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 0.85rem;
-      background-color: #f0f0f0;
-      padding: 1.5rem 1rem;
-      color: #54585A;
-      text-align: center;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .dark-mode footer {
-      background-color: #333333;
-      color: #dddddd;
-    }
-
-    .dark-mode footer a {
-      color: #DA291C;
+    .logo {
+      display: block;
+      margin: 0 auto 1.5rem auto;
+      max-width: 180px;
     }
 
     @media screen and (max-width: 600px) {
@@ -211,8 +144,52 @@
         font-size: 0.9rem;
       }
     }
-  </style>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+  }
+
+  .form-container {
+    background-color: #2a2a2a;
+    border-top: 8px solid #DA291C;
+  }
+
+  label, h2, .success, .error {
+    color: #ffffff;
+  }
+
+  input, textarea {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: 1px solid #555;
+  }
+
+  .fechaItem button {
+    background-color: #DA291C;
+  }
+
+  #addDateBtn {
+    background-color: #5F2167;
+  }
+
+  footer {
+    background-color: #333333 !important;
+    color: #dddddd !important;
+  }
+
+  footer a {
+    color: #DA291C !important;
+  }
+}
+
+</style>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 </head>
 <body>
   <div class="header">
@@ -221,63 +198,39 @@
   </div>
 
   <div class="page-content">
-    <div class="form-container">
-      <h2>Solicitud de días de fiesta</h2>
-      <form id="formFiestas">
-        <label for="Empleado">Número de empleado:</label>
-        <input type="text" id="Empleado" required />
-
-        <label for="Email">Correo electrónico:</label>
-        <input type="email" id="Email" required />
-
-        <label>Fechas solicitadas:</label>
-        <div id="fechasContainer">
-          <div class="fechaItem">
-            <input type="date" class="fechaIndividual" required />
-          </div>
-        </div>
-        <button type="button" id="addDateBtn">+ Añadir otra fecha</button>
-
-        <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
-
-        <label for="Comentario">Comentario:</label>
-        <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
-
-        <button type="submit">Enviar solicitud</button>
-        <p id="respuesta"></p>
-      </form>
-    </div>
+  <div class="header">
+    <img src="avanza_logo.png" alt="Logo Avanza" />
+    <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
   </div>
 
-  <footer>
-    <div style="max-width: 600px; margin: 0 auto;">
-      <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
-      <p style="margin: 0.2rem 0;">Dirección Urbanos Zaragoza · Miguel Servet, 199 - 50013 Zaragoza</p>
-      <p style="margin: 0.2rem 0;">📞 976 413 900 · ✉️ mantenimiento.zaragoza@mobilityado.com</p>
-      <p style="margin: 0.2rem 0;">
-        🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank">zaragoza.avanzagrupo.com</a>
-      </p>
-    </div>
-  </footer>
+  <div class="form-container">
+    <h2>Solicitud de días de fiesta</h2>
+    <form id="formFiestas">
+      <label for="Empleado">Número de empleado:</label>
+      <input type="text" id="Empleado" required />
 
-  <button class="toggle-theme" onclick="toggleTheme()">🌗 Cambiar tema</button>
+      <label for="Email">Correo electrónico:</label>
+      <input type="email" id="Email" required />
+
+      <label>Fechas solicitadas:</label>
+      <div id="fechasContainer">
+        <div class="fechaItem">
+          <input type="date" class="fechaIndividual" required />
+        </div>
+      </div>
+      <button type="button" id="addDateBtn">+ Añadir otra fecha</button>
+
+      <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
+
+      <label for="Comentario">Comentario:</label>
+      <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
+
+      <button type="submit">Enviar solicitud</button>
+      <p id="respuesta"></p>
+    </form>
+  </div>
 
   <script>
-    // Alternar modo oscuro manual
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    }
-
-    // Al cargar la página, aplicar tema guardado
-    window.onload = () => {
-      const storedTheme = localStorage.getItem('theme');
-      if (storedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-      }
-    };
-
-    // Script del formulario
     const fechasContainer = document.getElementById("fechasContainer");
     const addDateBtn = document.getElementById("addDateBtn");
 
@@ -300,9 +253,7 @@
         respuesta.textContent = "";
         respuesta.className = "";
 
-        const fechas = [...document.querySelectorAll(".fechaIndividual")]
-          .map(el => el.value.trim())
-          .filter(val => val !== "");
+        const fechas = document.getElementById("Fechas").value.split(",").map(f => f.trim()).filter(f => f !== "");
 
         if (fechas.length === 0) {
           respuesta.textContent = "❌ Debes seleccionar al menos una fecha.";
@@ -343,5 +294,48 @@
       });
     });
   </script>
+
+  </div>
+
+  <footer style="margin-top: 3rem; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #54585A; text-align: center;">
+    <div style="max-width: 600px; margin: 0 auto;">
+      <p style="font-size: 1rem; color: #DA291C; font-weight: bold; margin-bottom: 0.2rem;">
+        Mantenimiento Taller de Zaragoza
+      </p>
+      <p style="margin: 0; color: #909598;">Dirección Urbanos Zaragoza</p>
+            <p style="margin: 0.3rem;">
+        <img src="https://www.avanzagrupo.com/ado/firma/ico_direccion.png" style="vertical-align: middle; height: 16px; margin-right: 8px;" />
+        Miguel Servet, 199 - 50013 Zaragoza
+      </p>
+      <p style="margin: 0.3rem;">
+        <img src="https://www.avanzagrupo.com/ado/firma/ico_telefono.png" style="vertical-align: middle; height: 16px; margin-right: 8px;" />
+        976 413 900
+      </p>
+      <p style="margin: 0.3rem;">
+        <img src="https://www.avanzagrupo.com/ado/firma/ico_email.png" style="vertical-align: middle; height: 16px; margin-right: 8px;" />
+        mantenimiento.zaragoza@mobilityado.com
+      </p>
+      <p style="margin: 0.3rem;">
+        <img src="https://www.avanzagrupo.com/ado/firma/ico_url.png" style="vertical-align: middle; height: 16px; margin-right: 8px;" />
+        <a href="https://zaragoza.avanzagrupo.com" target="_blank" style="color: #5F2167; text-decoration: none;">
+          zaragoza.avanzagrupo.com
+        </a>
+      </p>
+    </div>
+  
+  </div>
+
+  <footer style="margin-top: 3rem; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; background-color: #f0f0f0; padding: 1.5rem 1rem; color: #54585A; text-align: center;">
+    <div style="max-width: 600px; margin: 0 auto;">
+      <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
+      <p style="margin: 0.2rem 0;">Dirección Urbanos Zaragoza · Miguel Servet, 199 - 50013 Zaragoza</p>
+      <p style="margin: 0.2rem 0;">📞 976 413 900 · ✉️ mantenimiento.zaragoza@mobilityado.com</p>
+      <p style="margin: 0.2rem 0;">
+        🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank" style="color: #5F2167; text-decoration: none;">zaragoza.avanzagrupo.com</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
+
+
