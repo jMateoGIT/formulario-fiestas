@@ -55,6 +55,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   inputNumero.addEventListener("input", function () {
     const num = inputNumero.value.trim();
+
+    if (num.length < 6) {
+      divNombre.textContent = "";
+      return;
+    }
+
+    if (!/^\d{6}$/.test(num)) {
+      divNombre.textContent = "❌ Deben ser 6 dígitos numéricos";
+      divNombre.style.color = "red";
+      return;
+    }
+
     if (empleados[num]) {
       divNombre.textContent = empleados[num];
       divNombre.style.color = "black";
@@ -67,9 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("formFiestas");
   form.addEventListener("submit", function (e) {
     const num = inputNumero.value.trim();
-    if (!empleados[num]) {
+
+    if (!/^\d{6}$/.test(num) || !empleados[num]) {
       e.preventDefault();
-      divNombre.textContent = "❌ Número no reconocido";
+      divNombre.textContent = "❌ Número no reconocido o formato inválido";
       divNombre.style.color = "red";
     }
   });
