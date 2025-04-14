@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <style>
     html {
       scroll-behavior: smooth;
@@ -179,7 +179,7 @@
         <input type="email" id="Email" required />
 
         <label for="Fechas">Fechas solicitadas:</label>
-        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." required />
+        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." readonly required />
 
         <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
@@ -203,17 +203,18 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  flatpickr("#Fechas", {
-    mode: "multiple",
-    dateFormat: "d/m/Y",
-    locale: "es"
-  });
+    document.addEventListener("DOMContentLoaded", function () {
+      flatpickr("#Fechas", {
+        mode: "multiple",
+        dateFormat: "d/m/Y",
+        locale: "es"
+      });
 
-  const form = document.getElementById("formFiestas");
+      const form = document.getElementById("formFiestas");
 
-  form.addEventListener("submit", async function (e) {
+      form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const respuesta = document.getElementById("respuesta");
         respuesta.textContent = "";
