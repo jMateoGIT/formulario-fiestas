@@ -8,7 +8,8 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" />
   <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
-  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js/dist/l10n/es.js"></script>
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
+
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
@@ -131,7 +132,7 @@
   <div class="page-content">
     <div class="form-container">
       <h2>Solicitud Fiestas Pagadas</h2>
-      <form id="formFiestas">
+      <form id="formFiestas" autocomplete="do-not-autofill">
         <label for="Empleado">Número de empleado:</label>
         <input type="text" id="Empleado" autocomplete="do-not-autofill" required />
 
