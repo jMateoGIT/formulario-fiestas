@@ -8,7 +8,15 @@
   <style>
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
       padding: 6rem 2rem 2rem 2rem; /* espacio extra arriba por la cabecera fija */
@@ -32,7 +40,7 @@
     }
 
     .header img {
-      height: 30px;
+      height: 40px;
     }
 
     .form-container {
@@ -142,6 +150,12 @@
     <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
   </div>
 
+  <div class="page-content">
+  <div class="header">
+    <img src="avanza_logo.png" alt="Logo Avanza" />
+    <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
+  </div>
+
   <div class="form-container">
     <h2>Solicitud de días de fiesta</h2>
     <form id="formFiestas">
@@ -236,6 +250,8 @@
     });
   </script>
 
+  </div>
+
   <footer style="margin-top: 3rem; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; color: #54585A; text-align: center;">
     <div style="max-width: 600px; margin: 0 auto;">
       <p style="font-size: 1rem; color: #DA291C; font-weight: bold; margin-bottom: 0.2rem;">
@@ -262,6 +278,8 @@
       </p>
     </div>
   
+  </div>
+
   <footer style="margin-top: 3rem; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; background-color: #f0f0f0; padding: 1.5rem 1rem; color: #54585A; text-align: center;">
     <div style="max-width: 600px; margin: 0 auto;">
       <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
