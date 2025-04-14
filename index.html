@@ -8,8 +8,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" />
   <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
-  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
-
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js/dist/l10n/es.js"></script>
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
@@ -132,15 +131,16 @@
   <div class="page-content">
     <div class="form-container">
       <h2>Solicitud de días de fiesta</h2>
-      <form id="formFiestas">
+      <form id="formFiestas" autocomplete="off">
+        <input type="text" name="fake_autofill" style="display:none">
         <label for="Empleado">Número de empleado:</label>
-        <input type="text" id="Empleado" required />
+        <input type="text" id="Empleado" name="empleadoID" required />
 
         <label for="Email">Correo electrónico:</label>
         <input type="email" id="Email" required />
 
         <label for="Fechas">Fechas solicitadas:</label>
-       <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." required name="fechasSolicitadasManual" autocomplete="off" />
+        <input type="text" id="Fechas" name="diasDeseados" placeholder="Selecciona múltiples fechas..." required autocomplete="off" />
 
         <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
@@ -166,13 +166,12 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-        flatpickr("#Fechas", {
-          mode: "multiple",
-          dateFormat: "d/m/Y",
-          locale: flatpickr.l10ns.es,
-          allowInput: true
-        });
-
+      flatpickr("#Fechas", {
+        mode: "multiple",
+        dateFormat: "d/m/Y",
+        locale: flatpickr.l10ns.es,
+        allowInput: true
+      });
 
       const form = document.getElementById("formFiestas");
 
