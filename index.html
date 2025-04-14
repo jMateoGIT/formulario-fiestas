@@ -1,29 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <title>Solicitud de Días de Fiesta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-* { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
-  height: 100%;
-  margin: 0;
-}
+      height: 100%;
+      margin: 0;
+    }
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
-      padding: 6rem 2rem 2rem 2rem; /* espacio extra arriba por la cabecera fija */
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .header {
@@ -38,11 +41,21 @@ body {
       padding: 0.8rem 1rem;
       gap: 1rem;
       z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .header img {
-      height: 40px;
+      height: 30px;
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      margin-top: 5rem;
     }
 
     .form-container {
@@ -71,7 +84,6 @@ body {
     input[type="text"],
     input[type="email"],
     textarea,
-    input[type="date"],
     button {
       width: 100%;
       padding: 0.6rem;
@@ -79,40 +91,6 @@ body {
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
-    }
-
-    .fechaItem {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .fechaItem button {
-      background-color: #DA291C;
-      color: white;
-      border: none;
-      padding: 0.4rem 0.6rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .fechaItem button:hover {
-      background-color: #a51f15;
-    }
-
-    #addDateBtn {
-      margin-top: 0.5rem;
-      background-color: #5F2167;
-      color: white;
-      border: none;
-      padding: 0.6rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #addDateBtn:hover {
-      background-color: #4a1851;
     }
 
     .success {
@@ -129,10 +107,14 @@ body {
       text-align: center;
     }
 
-    .logo {
-      display: block;
-      margin: 0 auto 1.5rem auto;
-      max-width: 180px;
+    footer {
+      margin-top: 3rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      background-color: #f0f0f0;
+      padding: 1.5rem 1rem;
+      color: #54585A;
+      text-align: center;
     }
 
     @media screen and (max-width: 600px) {
@@ -144,52 +126,41 @@ body {
         font-size: 0.9rem;
       }
     }
-  
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #1e1e1e;
-    color: #ffffff;
-  }
 
-  .form-container {
-    background-color: #2a2a2a;
-    border-top: 8px solid #DA291C;
-  }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
 
-  label, h2, .success, .error {
-    color: #ffffff;
-  }
+      .form-container {
+        background-color: #2a2a2a;
+      }
 
-  input, textarea {
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border: 1px solid #555;
-  }
+      label,
+      h2,
+      .success,
+      .error {
+        color: #ffffff;
+      }
 
-  .fechaItem button {
-    background-color: #DA291C;
-  }
+      input,
+      textarea {
+        background-color: #3a3a3a;
+        color: #ffffff;
+        border: 1px solid #555;
+      }
 
-  #addDateBtn {
-    background-color: #5F2167;
-  }
+      footer {
+        background-color: #333333 !important;
+        color: #dddddd !important;
+      }
 
-  footer {
-    background-color: #333333 !important;
-    color: #dddddd !important;
-  }
-
-  footer a {
-    color: #DA291C !important;
-  }
-}
-
-</style>
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+      footer a {
+        color: #DA291C !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="header">
@@ -198,50 +169,46 @@ body {
   </div>
 
   <div class="page-content">
-  <div class="header">
-    <img src="avanza_logo.png" alt="Logo Avanza" />
-    <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
+    <div class="form-container">
+      <h2>Solicitud de días de fiesta</h2>
+      <form id="formFiestas">
+        <label for="Empleado">Número de empleado:</label>
+        <input type="text" id="Empleado" required />
+
+        <label for="Email">Correo electrónico:</label>
+        <input type="email" id="Email" required />
+
+        <label for="Fechas">Fechas solicitadas:</label>
+        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." required />
+
+        <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
+
+        <label for="Comentario">Comentario:</label>
+        <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
+
+        <button type="submit">Enviar solicitud</button>
+        <p id="respuesta"></p>
+      </form>
+    </div>
   </div>
 
-  <div class="form-container">
-    <h2>Solicitud de días de fiesta</h2>
-    <form id="formFiestas">
-      <label for="Empleado">Número de empleado:</label>
-      <input type="text" id="Empleado" required />
-
-      <label for="Email">Correo electrónico:</label>
-      <input type="email" id="Email" required />
-
-      <label>Fechas solicitadas:</label>
-      <div id="fechasContainer">
-        <div class="fechaItem">
-          <input type="date" class="fechaIndividual" required />
-        </div>
-      </div>
-      <button type="button" id="addDateBtn">+ Añadir otra fecha</button>
-
-      <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
-
-      <label for="Comentario">Comentario:</label>
-      <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
-
-      <button type="submit">Enviar solicitud</button>
-      <p id="respuesta"></p>
-    </form>
-  </div>
+  <footer>
+    <div style="max-width: 600px; margin: 0 auto;">
+      <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
+      <p style="margin: 0.2rem 0;">Dirección Urbanos Zaragoza · Miguel Servet, 199 - 50013 Zaragoza</p>
+      <p style="margin: 0.2rem 0;">📞 976 413 900 · ✉️ mantenimiento.zaragoza@mobilityado.com</p>
+      <p style="margin: 0.2rem 0;">
+        🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank">zaragoza.avanzagrupo.com</a>
+      </p>
+    </div>
+  </footer>
 
   <script>
-    const fechasContainer = document.getElementById("fechasContainer");
-    const addDateBtn = document.getElementById("addDateBtn");
-
-    addDateBtn.addEventListener("click", () => {
-      const fechaDiv = document.createElement("div");
-      fechaDiv.className = "fechaItem";
-      fechaDiv.innerHTML = `
-        <input type="date" class="fechaIndividual" required />
-        <button type="button" onclick="this.parentNode.remove()">✕</button>
-      `;
-      fechasContainer.appendChild(fechaDiv);
+    // Inicializar Flatpickr
+    flatpickr("#Fechas", {
+      mode: "multiple",
+      dateFormat: "d/m/Y",
+      locale: "es"
     });
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -281,7 +248,6 @@ body {
             respuesta.textContent = "✅ Solicitud enviada correctamente.";
             respuesta.className = "success";
             form.reset();
-            fechasContainer.innerHTML = `<div class="fechaItem"><input type="date" class="fechaIndividual" required /></div>`;
           } else {
             respuesta.textContent = "❌ Error al enviar la solicitud.";
             respuesta.className = "error";
@@ -294,23 +260,5 @@ body {
       });
     });
   </script>
-
-  </div>
-
- 
-  </div>
-
-  <footer style="margin-top: 3rem; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; background-color: #f0f0f0; padding: 1.5rem 1rem; color: #54585A; text-align: center;">
-    <div style="max-width: 600px; margin: 0 auto;">
-      <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
-      <p style="margin: 0.2rem 0;">Dirección Urbanos Zaragoza · Miguel Servet, 199 - 50013 Zaragoza</p>
-      <p style="margin: 0.2rem 0;">📞 976 413 900 · ✉️ mantenimiento.zaragoza@mobilityado.com</p>
-      <p style="margin: 0.2rem 0;">
-        🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank" style="color: #5F2167; text-decoration: none;">zaragoza.avanzagrupo.com</a>
-      </p>
-    </div>
-  </footer>
 </body>
 </html>
-
-
