@@ -7,19 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -44,9 +37,7 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .header img {
-      height: 30px;
-    }
+    .header img { height: 30px; }
 
     .page-content {
       flex: 1;
@@ -118,47 +109,16 @@
     }
 
     @media screen and (max-width: 600px) {
-      .form-container {
-        padding: 1rem;
-      }
-
-      .header span {
-        font-size: 0.9rem;
-      }
+      .form-container { padding: 1rem; }
+      .header span { font-size: 0.9rem; }
     }
 
     @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #1e1e1e;
-        color: #ffffff;
-      }
-
-      .form-container {
-        background-color: #2a2a2a;
-      }
-
-      label,
-      h2,
-      .success,
-      .error {
-        color: #ffffff;
-      }
-
-      input,
-      textarea {
-        background-color: #3a3a3a;
-        color: #ffffff;
-        border: 1px solid #555;
-      }
-
-      footer {
-        background-color: #333333 !important;
-        color: #dddddd !important;
-      }
-
-      footer a {
-        color: #DA291C !important;
-      }
+      body { background-color: #1e1e1e; color: #fff; }
+      .form-container { background-color: #2a2a2a; }
+      input, textarea { background-color: #3a3a3a; color: white; border-color: #555; }
+      footer { background-color: #333; color: #ccc; }
+      footer a { color: #DA291C; }
     }
   </style>
 </head>
@@ -179,7 +139,7 @@
         <input type="email" id="Email" required />
 
         <label for="Fechas">Fechas solicitadas:</label>
-        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." readonly required />
+        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." required />
 
         <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
@@ -203,17 +163,14 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       flatpickr("#Fechas", {
         mode: "multiple",
         dateFormat: "d/m/Y",
-        locale: flatpickr.l10ns.es
+        locale: flatpickr.l10ns.es,
+        allowInput: true
       });
-
 
       const form = document.getElementById("formFiestas");
 
