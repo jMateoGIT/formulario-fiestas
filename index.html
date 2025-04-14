@@ -36,6 +36,7 @@
       const respuesta = document.getElementById("respuesta");
       respuesta.textContent = "";
 
+    console.log("Enviando solicitud con datos:", body);
       const body = {
         Empleado: document.getElementById("empleadoID").value,
         Email: document.getElementById("emailEmpleado").value,
@@ -49,6 +50,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
         });
+
+      console.log("Respuesta recibida:", res.status);
 
         if (res.ok) {
           respuesta.textContent = "✅ Solicitud enviada correctamente.";
