@@ -1,51 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Solicitud de Días de Fiesta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 2rem; }
-    input, textarea, button { width: 100%; margin: 0.5rem 0; padding: 0.5rem; }
-    label { font-weight: bold; margin-top: 1rem; display: block; }
-    .success { color: green; }
-    .error { color: red; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .fechaItem {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .fechaItem input[type="date"] {
+      flex: 1;
+    }
+
+    .fechaItem button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .fechaItem button:hover {
+      background-color: #c0392b;
+    }
+
+    #addDateBtn {
+      margin-top: 0.5rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #addDateBtn:hover {
+      background-color: #2980b9;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 600px) {
+      .form-container {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h2>Solicitud de días de fiesta</h2>
-  <form id="formFiestas">
-    <label for="Empleado">Número de empleado:</label>
-    <input type="text" id="Empleado" required />
+  <div class="form-container">
+    <h2>Solicitud de días de fiesta</h2>
+    <form id="formFiestas">
+      <label for="Empleado">Número de empleado:</label>
+      <input type="text" id="Empleado" required />
 
-    <label for="Email">Correo electrónico:</label>
-    <input type="email" id="Email" required />
+      <label for="Email">Correo electrónico:</label>
+      <input type="email" id="Email" required />
 
-    <label>Selecciona fechas:</label>
-    <div id="fechasContainer">
-      <input type="date" class="fechaIndividual" />
-    </div>
-    <button type="button" onclick="agregarFecha()">+ Añadir otra fecha</button>
+      <label>Fechas solicitadas:</label>
+      <div id="fechasContainer">
+        <div class="fechaItem">
+          <input type="date" class="fechaIndividual" required />
+        </div>
+      </div>
+      <button type="button" id="addDateBtn">+ Añadir otra fecha</button>
 
-    <!-- Campo oculto que se rellena automáticamente -->
-    <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
+      <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
-    <label for="Comentario">Comentario:</label>
-    <textarea id="Comentario"></textarea>
+      <label for="Comentario">Comentario:</label>
+      <textarea id="Comentario" rows="4" placeholder="Opcional..."></textarea>
 
-    <button type="submit">Enviar solicitud</button>
-    <p id="respuesta"></p>
-  </form>
+      <button type="submit">Enviar solicitud</button>
+      <p id="respuesta"></p>
+    </form>
+  </div>
 
   <script>
-    // Función para añadir más inputs de fecha
-    function agregarFecha() {
-      const contenedor = document.getElementById("fechasContainer");
-      const nuevoInput = document.createElement("input");
-      nuevoInput.type = "date";
-      nuevoInput.className = "fechaIndividual";
-      contenedor.appendChild(document.createElement("br"));
-      contenedor.appendChild(nuevoInput);
-    }
+    const fechasContainer = document.getElementById("fechasContainer");
+    const addDateBtn = document.getElementById("addDateBtn");
+
+    addDateBtn.addEventListener("click", () => {
+      const fechaDiv = document.createElement("div");
+      fechaDiv.className = "fechaItem";
+      fechaDiv.innerHTML = `
+        <input type="date" class="fechaIndividual" required />
+        <button type="button" onclick="this.parentNode.remove()">✕</button>
+      `;
+      fechasContainer.appendChild(fechaDiv);
+    });
 
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("formFiestas");
@@ -54,19 +150,26 @@
         e.preventDefault();
         const respuesta = document.getElementById("respuesta");
         respuesta.textContent = "";
+        respuesta.className = "";
 
-        // Recoger fechas seleccionadas y concatenarlas
+        // Validar fechas
         const fechas = [...document.querySelectorAll(".fechaIndividual")]
-          .map(el => el.value)
-          .filter(val => val !== "")
-          .join(", ");
-        document.getElementById("FechasSolicitadas").value = fechas;
+          .map(el => el.value.trim())
+          .filter(val => val !== "");
+
+        if (fechas.length === 0) {
+          respuesta.textContent = "❌ Debes seleccionar al menos una fecha.";
+          respuesta.className = "error";
+          return;
+        }
+
+        document.getElementById("FechasSolicitadas").value = fechas.join(", ");
 
         const body = {
-          Empleado: document.getElementById("Empleado").value,
-          Email: document.getElementById("Email").value,
-          FechasSolicitadas: fechas,
-          Comentario: document.getElementById("Comentario").value
+          Empleado: document.getElementById("Empleado").value.trim(),
+          Email: document.getElementById("Email").value.trim(),
+          FechasSolicitadas: fechas.join(", "),
+          Comentario: document.getElementById("Comentario").value.trim()
         };
 
         console.log("Enviando solicitud con datos:", body);
@@ -78,15 +181,11 @@
             body: JSON.stringify(body)
           });
 
-          console.log("Respuesta recibida:", res.status);
-
           if (res.ok) {
             respuesta.textContent = "✅ Solicitud enviada correctamente.";
             respuesta.className = "success";
             form.reset();
-            // Reinicia los campos de fecha: deja solo uno
-            const contenedor = document.getElementById("fechasContainer");
-            contenedor.innerHTML = '<input type="date" class="fechaIndividual" />';
+            fechasContainer.innerHTML = `<div class="fechaItem"><input type="date" class="fechaIndividual" required /></div>`;
           } else {
             respuesta.textContent = "❌ Error al enviar la solicitud.";
             respuesta.className = "error";
