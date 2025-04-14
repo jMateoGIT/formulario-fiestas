@@ -20,8 +20,14 @@
     <label for="Email">Correo electrónico:</label>
     <input type="email" id="Email" required />
 
-    <label for="FechasSolicitadas">Fechas solicitadas (separadas por coma):</label>
-    <input type="text" id="FechasSolicitadas" placeholder="ej. 14/04/2025, 15/04/2025" required />
+    <label>Selecciona fechas:</label>
+    <div id="fechasContainer">
+      <input type="date" class="fechaIndividual" />
+    </div>
+    <button type="button" onclick="agregarFecha()">+ Añadir otra fecha</button>
+
+    <!-- Campo oculto que se rellena automáticamente -->
+    <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
     <label for="Comentario">Comentario:</label>
     <textarea id="Comentario"></textarea>
@@ -31,6 +37,16 @@
   </form>
 
   <script>
+    // Función para añadir más inputs de fecha
+    function agregarFecha() {
+      const contenedor = document.getElementById("fechasContainer");
+      const nuevoInput = document.createElement("input");
+      nuevoInput.type = "date";
+      nuevoInput.className = "fechaIndividual";
+      contenedor.appendChild(document.createElement("br"));
+      contenedor.appendChild(nuevoInput);
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("formFiestas");
 
@@ -39,15 +55,20 @@
         const respuesta = document.getElementById("respuesta");
         respuesta.textContent = "";
 
-        // Primero declaramos body
+        // Recoger fechas seleccionadas y concatenarlas
+        const fechas = [...document.querySelectorAll(".fechaIndividual")]
+          .map(el => el.value)
+          .filter(val => val !== "")
+          .join(", ");
+        document.getElementById("FechasSolicitadas").value = fechas;
+
         const body = {
           Empleado: document.getElementById("Empleado").value,
           Email: document.getElementById("Email").value,
-          FechasSolicitadas: document.getElementById("FechasSolicitadas").value,
+          FechasSolicitadas: fechas,
           Comentario: document.getElementById("Comentario").value
         };
 
-        // Ahora sí, podemos imprimirlo
         console.log("Enviando solicitud con datos:", body);
 
         try {
@@ -63,6 +84,9 @@
             respuesta.textContent = "✅ Solicitud enviada correctamente.";
             respuesta.className = "success";
             form.reset();
+            // Reinicia los campos de fecha: deja solo uno
+            const contenedor = document.getElementById("fechasContainer");
+            contenedor.innerHTML = '<input type="date" class="fechaIndividual" />';
           } else {
             respuesta.textContent = "❌ Error al enviar la solicitud.";
             respuesta.className = "error";
@@ -77,4 +101,3 @@
   </script>
 </body>
 </html>
-
