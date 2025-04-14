@@ -204,13 +204,16 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       flatpickr("#Fechas", {
         mode: "multiple",
         dateFormat: "d/m/Y",
-        locale: "es"
+        locale: flatpickr.l10ns.es
       });
+
 
       const form = document.getElementById("formFiestas");
 
