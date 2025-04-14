@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Solicitud de Días de Fiesta</title>
+  <title>Solicitud FP Avanza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * { box-sizing: border-box; }
@@ -11,9 +11,28 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
-      padding: 2rem;
+      padding: 6rem 2rem 2rem 2rem; /* espacio extra arriba por la cabecera fija */
       display: flex;
       justify-content: center;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #5F2167;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      gap: 1rem;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .header img {
+      height: 40px;
     }
 
     .form-container {
@@ -110,13 +129,21 @@
       .form-container {
         padding: 1rem;
       }
+
+      .header span {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="header">
+    <img src="avanza_logo.png" alt="Logo Avanza" />
+    <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
+  </div>
+
   <div class="form-container">
-    <img src="avanza_logo.png" alt="Logo Avanza" class="logo" />
-    <h2>Solicitud de días de fiesta</h2>
+    <h2>Solicitud de fiestas pagadas</h2>
     <form id="formFiestas">
       <label for="Empleado">Número de empleado:</label>
       <input type="text" id="Empleado" required />
