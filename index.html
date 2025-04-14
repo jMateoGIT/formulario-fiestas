@@ -6,9 +6,10 @@
   <title>Solicitud de Días de Fiesta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" />
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
+
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
@@ -165,12 +166,13 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      flatpickr("#Fechas", {
-        mode: "multiple",
-        dateFormat: "d/m/Y",
-        locale: flatpickr.l10ns.es,
-        allowInput: true
-      });
+        flatpickr("#Fechas", {
+          mode: "multiple",
+          dateFormat: "d/m/Y",
+          locale: flatpickr.l10ns.es,
+          allowInput: true
+        });
+
 
       const form = document.getElementById("formFiestas");
 
