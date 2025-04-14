@@ -1,19 +1,16 @@
-
+document.addEventListener("DOMContentLoaded", function () {
 flatpickr("#Fechas", {
-  mode: "multiple",
-  dateFormat: "d/m/Y",
-  locale: flatpickr.l10ns.es,
-  conjunction: ", ",
-  allowInput: true
+mode: "multiple",
+dateFormat: "d/m/Y",
+locale: flatpickr.l10ns.es,
+allowInput: true
 });
-
 const form = document.getElementById("formFiestas");
-
 form.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const respuesta = document.getElementById("respuesta");
-  respuesta.textContent = "";
-  respuesta.className = "";
+e.preventDefault();
+const respuesta = document.getElementById("respuesta");
+respuesta.textContent = "";
+respuesta.className = "";
 
   const fechas = document.getElementById("Fechas").value.trim();
 
