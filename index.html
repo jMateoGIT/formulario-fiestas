@@ -9,7 +9,6 @@
 <link href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
-
 <link href="style.css" rel="stylesheet"/></head>
 <body>
 <div class="header">
@@ -21,10 +20,16 @@
 <h2>Solicitud Fiestas Pagadas</h2>
 <form id="formFiestas">
 <label for="NumeroJDE">Número de empleado:</label>
-<input type="text" id="NumeroJDE" name="FakeNameEmpleado" autocomplete="chrome-off" placeholder="Inserte número de empleado largo" required />
+<input autocomplete="chrome-off" id="NumeroJDE" name="FakeNameEmpleado" placeholder="Inserte número de empleado largo" required="" type="text"/>
 <div id="nombreEmpleado" style="margin-top: 0.5rem; padding: 0.6rem; background-color: #eee; border-radius: 6px;"></div>
 <label for="Email">Correo electrónico:</label>
 <input id="Email" required="" type="email"/>
+
+<div class="modo-selector" style="margin-top: 1rem;">
+<label style="font-weight: bold;">Modo de selección:</label>
+<label><input checked="" id="modoMultiple" name="modo" type="radio"/> Múltiples fechas</label>
+<label><input id="modoRango" name="modo" type="radio"/> Rango de fechas</label>
+</div>
 <label for="Fechas">Fechas solicitadas:</label>
 <input autocomplete="chrome-off" id="Fechas" name="FakeNameFechas" placeholder="Selecciona múltiples fechas..." required="" type="text"/>
 <input id="FechasSolicitadas" name="FechasSolicitadas" type="hidden"/>
@@ -45,6 +50,5 @@
 </p>
 </div>
 </footer>
-
 <script defer="True" src="main.js"></script></body>
 </html>
