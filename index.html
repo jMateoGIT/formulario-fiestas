@@ -132,15 +132,15 @@
   <div class="page-content">
     <div class="form-container">
       <h2>Solicitud Fiestas Pagadas</h2>
-      <form id="formFiestas" autocomplete="do-not-autofill">
+      <form id="formFiestas" autocomplete="chrome-off">
         <label for="Empleado">Número de empleado:</label>
-        <input type="text" id="Empleado" autocomplete="do-not-autofill" required />
+        <input type="text" id="Empleado" name="FakeNameEmpleado" autocomplete="chrome-off" required />
 
         <label for="Email">Correo electrónico:</label>
         <input type="email" id="Email" name="usuarioContacto"  required />
 
         <label for="Fechas">Fechas solicitadas:</label>
-        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." autocomplete="do-not-autofill" required />
+        <input type="text" id="Fechas" placeholder="Selecciona múltiples fechas..." name="FakeNameFechas" autocomplete="chrome-off" required />
 
         <input type="hidden" id="FechasSolicitadas" name="FechasSolicitadas" />
 
