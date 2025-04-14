@@ -204,17 +204,16 @@
   </footer>
 
   <script>
-    // Inicializar Flatpickr
-    flatpickr("#Fechas", {
-      mode: "multiple",
-      dateFormat: "d/m/Y",
-      locale: "es"
-    });
+  document.addEventListener("DOMContentLoaded", function () {
+  flatpickr("#Fechas", {
+    mode: "multiple",
+    dateFormat: "d/m/Y",
+    locale: "es"
+  });
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("formFiestas");
+  const form = document.getElementById("formFiestas");
 
-      form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const respuesta = document.getElementById("respuesta");
         respuesta.textContent = "";
