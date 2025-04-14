@@ -129,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("formFiestas");
   form.addEventListener("submit", function (e) {
     const num = inputNumero.value.trim();
-    document.getElementById("formFiestas").querySelector("button[type='submit']").click();
 
     if (!/^\d{6}$/.test(num) || !empleados[num]) {
       e.preventDefault();
