@@ -71,8 +71,49 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
+        transition: all 0.2s ease;
     }
 
+    button:active {
+      transform: scale(0.97);
+      background-color: #4a1851; /* tono más oscuro temporal */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2) inset;
+    }
+
+    #btnEnviar {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .btn-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 3px solid #fff;
+      border-top: 3px solid #DA291C;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 8px;
+    }
+    
+    .btn-text {
+      transition: opacity 0.2s;
+    }
+    
+    .loading .btn-text {
+      opacity: 0;
+    }
+    
+    .loading .btn-spinner {
+      display: inline-block;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
     .success {
       color: #5F2167;
       font-weight: bold;
