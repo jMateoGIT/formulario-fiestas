@@ -74,6 +74,10 @@
         transition: all 0.2s ease;
     }
 
+    g-recaptcha {
+        margin: 1rem 0;
+    }
+
     button:active {
       transform: scale(0.97);
       background-color: #4a1851; /* tono más oscuro temporal */
