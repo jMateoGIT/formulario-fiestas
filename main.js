@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const captcha = grecaptcha.getResponse();
       if (!captcha) {
+        e.preventDefault()
         respuesta.textContent = "⚠️ Por favor, verifica que no eres un robot.";
         respuesta.className = "error";
         return;
