@@ -3,63 +3,81 @@
 <head>
   <meta charset="utf-8"/>
   <title>Solicitud de Días de Fiesta</title>
+  <meta name="description" content="Formulario para solicitar días de fiesta pagados en el Taller Avanza Zaragoza"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="referrer" content="same-origin"/>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css"/>
-  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
-  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" crossorigin="anonymous"/><!-- Agrega atributo integrity en producción -->
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js" crossorigin="anonymous" defer></script>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header class="header">
     <img src="avanza_logo.png" alt="Logo Avanza"/>
-    <span>Portal de solicitudes – Taller Avanza Zaragoza</span>
+    <h1 class="site-title">Portal de solicitudes – Taller Avanza Zaragoza</h1>
   </header>
 
   <main class="page-content">
     <section class="form-container">
       <h2>Solicitud Fiestas Pagadas</h2>
-      <form id="formFiestas" autocomplete="off">
-        <label for="NumeroJDE">Número de empleado:</label>
-        <input id="NumeroJDE" name="FakeNameEmpleado" type="text" placeholder="Inserte número de empleado largo" required/>
 
-        <div id="nombreEmpleado" style="margin-top: 0.5rem; padding: 0.6rem; background-color: #eee; border-radius: 6px; display: none;"></div>
+      <form id="formFiestas" autocomplete="off" novalidate>
+        <label for="NumeroJDE">Número de empleado:</label>
+        <input id="NumeroJDE"
+               name="numeroEmpleado"
+               type="text"
+               pattern="\d{6}"
+               inputmode="numeric"
+               placeholder="Inserte número de empleado (6 dígitos)"
+               required
+               aria-describedby="nombreEmpleado"/>
+
+        <div id="nombreEmpleado" class="info-box" aria-live="polite"></div>
 
         <label for="Email">Correo electrónico:</label>
-        <input id="Email" type="email" required/>
+        <input id="Email" name="email" type="email" required/>
 
-        <fieldset class="modo-selector" style="margin-top: 1rem;">
-          <legend style="font-weight: bold; color: #54585A;">Modo de selección:</legend>
-          <label style="margin-top: 0.3rem;"><input type="radio" name="modo" id="modoMultiple" checked/> Fechas individuales</label>
-          <label style="margin-top: 0.7rem;"><input type="radio" name="modo" id="modoRango"/> Rango de fechas</label>
+        <fieldset class="modo-selector">
+          <legend>Modo de selección:</legend>
+          <label><input type="radio" name="modo" id="modoMultiple" checked/> Fechas individuales</label>
+          <label><input type="radio" name="modo" id="modoRango"/> Rango de fechas</label>
         </fieldset>
 
         <label for="Fechas">Fechas solicitadas:</label>
-        <input id="Fechas" name="FakeNameFechas" type="text" placeholder="Selecciona las fechas deseadas" required/>
+        <input id="Fechas"
+               name="FechasDisplay"
+               type="text"
+               placeholder="Selecciona las fechas deseadas"
+               required/>
 
         <input id="FechasSolicitadas" name="FechasSolicitadas" type="hidden"/>
 
         <label for="Comentario">Comentario:</label>
         <textarea id="Comentario" name="comentarioExtra" placeholder="Añada un comentario si lo desea" rows="4"></textarea>
 
-        <button type="submit">Enviar solicitud</button>
+        <button id="btnEnviar" type="submit">
+          <span class="btn-text">Enviar solicitud</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
 
-        <p id="respuesta"></p>
+        <p id="respuesta" aria-live="polite"></p>
       </form>
     </section>
   </main>
 
   <footer>
-    <div style="max-width: 600px; margin: 0 auto;">
-      <p style="margin: 0.2rem 0; color: #DA291C; font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
-      <p style="margin: 0.2rem 0;">Dirección Urbanos Zaragoza · Miguel Servet, 199 - 50013 Zaragoza</p>
-      <p style="margin: 0.2rem 0;">📞 976 413 900 · ✉️ mantenimiento.zaragoza@mobilityado.com</p>
-      <p style="margin: 0.2rem 0;">
-        🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank">zaragoza.avanzagrupo.com</a>
-      </p>
-    </div>
+    <address>
+      <p style="color: var(--color-accent); font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
+      <p>Dirección Urbanos Zaragoza · Miguel Servet, 199 – 50013 Zaragoza</p>
+      <p>📞 976 413 900 · ✉️ <a href="mailto:mantenimiento.zaragoza@mobilityado.com">mantenimiento.zaragoza@mobilityado.com</a></p>
+      <p>🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank" rel="noopener">zaragoza.avanzagrupo.com</a></p>
+    </address>
   </footer>
 
-  <script defer src="main.js"></script>
+  <script type="module" src="main.js" defer></script>
 </body>
 </html>
+
