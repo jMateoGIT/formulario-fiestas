@@ -61,6 +61,13 @@
       color: #54585A;
     }
 
+    info-box {
+        margin-top: 0.5rem; 
+        padding: 0.6rem; 
+        background-color: #eee; 
+        border-radius: 6px;
+    }
+
     input[type="text"],
     input[type="email"],
     textarea,
