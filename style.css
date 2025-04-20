@@ -67,6 +67,7 @@ h2 {
   text-align: center;
   color: var(--color-primary);
   margin-bottom: 1.5rem;
+  margin-top: 0;
 }
 
 .modo-selector {
