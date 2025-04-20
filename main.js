@@ -129,6 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("formFiestas");
   form.addEventListener("submit", function (e) {
     const num = inputNumero.value.trim();
+    
+    const captcha = grecaptcha.getResponse();
+      if (!captcha) {
+        respuesta.textContent = "⚠️ Por favor, verifica que no eres un robot.";
+        respuesta.className = "error";
+        return;
+      }
 
     if (!/^\d{6}$/.test(num) || !empleados[num]) {
       e.preventDefault();
