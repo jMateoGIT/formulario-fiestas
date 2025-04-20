@@ -6,7 +6,7 @@
   const $ = (sel) => document.querySelector(sel);
 
   /* Ajusta a tu backend; no expongas la URL con clave en cliente */
-  const ENDPOINT = "/api/solicitud";
+  const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
 
   let fp;
 
