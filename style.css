@@ -110,6 +110,7 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 button:disabled {
