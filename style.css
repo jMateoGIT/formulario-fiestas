@@ -69,9 +69,13 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
+.modo-selector {
+  margin-top: 0.7rem;
+}
+
 label {
   display: block;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   font-weight: bold;
 }
 
