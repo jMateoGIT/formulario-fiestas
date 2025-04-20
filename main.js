@@ -19,7 +19,7 @@ const empleados = {"105451": "NICANOR VALVERDE MARTIN", "105524": "JOSE ANTONIO 
     if (fp) fp.destroy();
     fp = flatpickr("#Fechas", {
       mode,
-      dateFormat: "Y-m-d", // ISO => mejor para backend
+      dateFormat: "d/m/Y", // ISO => mejor para backend
       locale: flatpickr.l10ns.es,
       allowInput: true,
       conjunction: ", "
