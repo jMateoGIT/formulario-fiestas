@@ -1,42 +1,35 @@
-// main.js (revisado)
 (() => {
   "use strict";
 
-  /* Utilidad corta para seleccionar */
   const $ = (sel) => document.querySelector(sel);
 
-  /* Ajusta a tu backend; no expongas la URL con clave en cliente */
   const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
 
   let fp;
 
-  /** Configura el date‑picker */
   const configurarFlatpickr = (mode = "multiple") => {
     if (fp) fp.destroy();
     fp = flatpickr("#Fechas", {
       mode,
-      dateFormat: "d/m/Y", // ISO => mejor para backend
+      dateFormat: "d/m/Y",
       locale: flatpickr.l10ns.es,
       allowInput: true,
       conjunction: ", "
     });
   };
 
-  /** Muestra mensaje de feedback */
   const mostrarMensaje = (msg, tipo = "success") => {
     const respuesta = $("#respuesta");
     respuesta.textContent = msg;
     respuesta.className = tipo;
   };
 
-  /** Activa / desactiva spinner y botón */
   const toggleLoading = (loading = true) => {
     const btn = $("#btnEnviar");
     btn.disabled = loading;
     btn.classList.toggle("loading", loading);
   };
 
-  /* Iniciar cuando el DOM esté listo */
   document.addEventListener("DOMContentLoaded", () => {
     configurarFlatpickr("multiple");
 
@@ -44,42 +37,15 @@
     $("#modoRango").addEventListener("change", () => configurarFlatpickr("range"));
 
     const inputNumero = $("#NumeroJDE");
-    const divNombre = $("#nombreEmpleado");
 
-    /* Validación en tiempo real del número */
-    inputNumero.addEventListener("input", () => {
-      const num = inputNumero.value.trim();
-
-      if (num.length < 6) {
-        divNombre.textContent = "";
-        return;
-      }
-
-      if (!/^\d{6}$/.test(num)) {
-        divNombre.textContent = "❌ Deben ser 6 dígitos numéricos";
-        divNombre.style.color = "var(--color-accent)";
-        return;
-      }
-
-      if (empleados[num]) {
-        divNombre.textContent = empleados[num];
-        divNombre.style.color = "inherit";
-      } else {
-        divNombre.textContent = "❌ Número no reconocido";
-        divNombre.style.color = "var(--color-accent)";
-      }
-    });
-
-    /* Envío del formulario */
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const num = inputNumero.value.trim();
       const fechas = $("#Fechas").value.trim();
 
-      // Validaciones HTML + JS para mostrar mensajes accesibles
-      if (!/^\d{6}$/.test(num) || !empleados[num]) {
-        inputNumero.setCustomValidity("Número no reconocido o formato inválido");
+      if (!/^\d{6}$/.test(num)) {
+        inputNumero.setCustomValidity("Número inválido (deben ser 6 dígitos)");
         inputNumero.reportValidity();
         return;
       } else {
@@ -91,7 +57,7 @@
         return;
       }
 
-      $("#FechasSolicitadas").value = fechas; // por si backend lo necesita
+      $("#FechasSolicitadas").value = fechas;
 
       const body = {
         empleado: num,
@@ -111,7 +77,6 @@
         if (res.ok) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
-          divNombre.textContent = "";
         } else {
           mostrarMensaje(`❌ Error al enviar la solicitud (${res.status}).`, "error");
         }
