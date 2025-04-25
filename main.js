@@ -61,6 +61,15 @@
         return;
       }
 
+      if (empleados[num]) {
+        divNombre.textContent = empleados[num];
+        divNombre.style.color = "inherit";
+      } else {
+        divNombre.textContent = "❌ Número no reconocido";
+        divNombre.style.color = "var(--color-accent)";
+      }
+    });
+
     /* Envío del formulario */
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -69,8 +78,8 @@
       const fechas = $("#Fechas").value.trim();
 
       // Validaciones HTML + JS para mostrar mensajes accesibles
-      if (!/^\d{6}$/.test(num)) {
-        inputNumero.setCustomValidity("Formato inválido");
+      if (!/^\d{6}$/.test(num) || !empleados[num]) {
+        inputNumero.setCustomValidity("Número no reconocido o formato inválido");
         inputNumero.reportValidity();
         return;
       } else {
@@ -115,4 +124,3 @@
     });
   });
 })();
-
