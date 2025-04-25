@@ -82,7 +82,7 @@
           body: JSON.stringify(body)
         });
 
-        if (res.status === 200 || res.status === 202) {
+        if (res.ok) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
           divNombre.textContent = "";
