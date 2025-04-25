@@ -48,11 +48,11 @@
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const num = inputNumero.value.trim();
+      const numeroEmpleado = inputNumero.value.trim();
       const fechas = $("#Fechas").value.trim();
 
       // Validaciones HTML + JS para mostrar mensajes accesibles
-      if (!/^\d{6}$/.test(num)) {
+      if (!/^\d{6}$/.test(numeroEmpleado)) {
         inputNumero.setCustomValidity("Formato inválido");
         inputNumero.reportValidity();
         return;
@@ -68,7 +68,7 @@
       $("#FechasSolicitadas").value = fechas; // por si backend lo necesita
 
       const body = {
-        empleado: num,
+        empleado: numeroEmpleado,
         email: $("#Email").value.trim(),
         fechasSolicitadas: fechas,
         comentario: $("#Comentario").value.trim()
@@ -82,10 +82,9 @@
           body: JSON.stringify(body)
         });
 
-        if (res.ok) {
+        if (res.status === 200 || res.status === 202) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
-          divNombre.textContent = "";
         } else {
           mostrarMensaje(`❌ Error al enviar la solicitud (${res.status}).`, "error");
         }
