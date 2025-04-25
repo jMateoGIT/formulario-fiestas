@@ -111,7 +111,7 @@ const empleados = {"105451": "NICANOR VALVERDE MARTIN", "105524": "JOSE ANTONIO 
           body: JSON.stringify(body)
         });
 
-        if (res.ok) {
+        if (res.status === 200 || res.status === 202) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
           divNombre.textContent = "";
