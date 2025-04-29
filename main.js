@@ -43,7 +43,7 @@
     $("#modoRango").addEventListener("change", () => configurarFlatpickr("range"));
 
     const inputNumero = $("#NumeroJDE");
-    const inputEmail = $("Email");
+    const inputEmail = $("#Email");
 
     /* Envío del formulario */
     $("#formFiestas").addEventListener("submit", async (e) => {
