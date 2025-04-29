@@ -43,6 +43,7 @@
     $("#modoRango").addEventListener("change", () => configurarFlatpickr("range"));
 
     const inputNumero = $("#NumeroJDE");
+    const inputEmail = $("Email");
 
     /* Envío del formulario */
     $("#formFiestas").addEventListener("submit", async (e) => {
@@ -60,6 +61,14 @@
         inputNumero.setCustomValidity("");
       }
 
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail.value)) {
+        inputEmail.setCustomValidity("Formato de correo inválido");
+        inputEmail.reportValidity();
+        return;
+      } else {
+        inputEmail.setCustomValidity("");
+      }
+      
       if (!fechas) {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
         return;
