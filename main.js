@@ -51,6 +51,7 @@
 
       const numeroEmpleado = inputNumero.value.trim();
       const fechas = $("#Fechas").value.trim();
+      const correo = inputEmail.value.trim();
 
       // Validaciones HTML + JS para mostrar mensajes accesibles
       if (!/^\d{6}$/.test(numeroEmpleado)) {
@@ -61,7 +62,7 @@
         inputNumero.setCustomValidity("");
       }
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail.value)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
         inputEmail.setCustomValidity("Formato de correo inválido");
         inputEmail.reportValidity();
         return;
@@ -78,7 +79,7 @@
 
       const body = {
         empleado: numeroEmpleado,
-        email: $("#Email").value.trim(),
+        email: correo,
         fechasSolicitadas: fechas,
         comentario: $("#Comentario").value.trim()
       };
