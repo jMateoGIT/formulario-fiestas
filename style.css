@@ -172,9 +172,10 @@ footer a { color: var(--color-accent); }
 }
 
 .consent-msg {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #666;
   margin-top: 0.8rem;
   text-align: center;
+  font-style: italic;
 }
 
