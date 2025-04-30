@@ -46,21 +46,21 @@
       if (res.ok) {
         const datos = await res.json();
         if (datos.nombre) {
-          info.textContent = `👤 ${datos.nombre}`;
+          info.textContent = "✅ Número correcto";
           info.className = "info-box";
           empleadoValido = true;
         } else {
           info.textContent = "❌ Número no encontrado.";
-          info.className = "error";
+          info.className = "info-box";
         }
       } else {
         info.textContent = "⚠️ Error al validar el número.";
-        info.className = "error";
+        info.className = "info-box";
       }
     } catch (err) {
       console.error(err);
       info.textContent = "⚠️ Error de conexión.";
-      info.className = "error";
+      info.className = "info-box";
     }
   };
 
