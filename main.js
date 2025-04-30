@@ -103,13 +103,14 @@
         return;
       }
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
         inputEmail.setCustomValidity("Formato de correo inválido");
         inputEmail.reportValidity();
         return;
       } else {
         inputEmail.setCustomValidity("");
       }
+      
 
       if (!fechas) {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
