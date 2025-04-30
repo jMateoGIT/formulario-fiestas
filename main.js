@@ -95,6 +95,7 @@
         if (res.status === 200 || res.status === 202) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
+          fp.clear();
         } else {
           mostrarMensaje(`❌ Error al enviar la solicitud (${res.status}).`, "error");
         }

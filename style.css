@@ -170,3 +170,11 @@ footer a { color: var(--color-accent); }
   input, textarea { background: #3a3a3a; color: #fff; border-color: #555; }
   footer { background: #333; }
 }
+
+.consent-msg {
+  font-size: 0.7rem;
+  color: #666;
+  margin-top: 0.8rem;
+  text-align: center;
+}
+
