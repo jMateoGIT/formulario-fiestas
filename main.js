@@ -1,41 +1,69 @@
 (() => {
   "use strict";
 
-  /* Utilidad corta para seleccionar */
   const $ = (sel) => document.querySelector(sel);
 
-  /* Ajusta a tu backend; no expongas la URL con clave en cliente */
   const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
+  const VALIDACION_ENDPOINT = "https://prod-40.westus.logic.azure.com:443/workflows/ccfa085e953040e0bd375ce228f1bd81/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fwxAql7wt_ZS-aEMrjquaHx7fFJAMLxufUkMwoxCjtA";
 
   let fp;
+  let empleadoValido = false;
 
-  /** Configura el date‑picker */
   const configurarFlatpickr = (mode = "multiple") => {
     if (fp) fp.destroy();
     fp = flatpickr("#Fechas", {
       mode,
-      dateFormat: "d/m/Y", // ISO => mejor para backend
+      dateFormat: "d/m/Y",
       locale: flatpickr.l10ns.es,
       allowInput: true,
       conjunction: ", "
     });
   };
 
-  /** Muestra mensaje de feedback */
   const mostrarMensaje = (msg, tipo = "success") => {
     const respuesta = $("#respuesta");
     respuesta.textContent = msg;
     respuesta.className = tipo;
   };
 
-  /** Activa / desactiva spinner y botón */
   const toggleLoading = (loading = true) => {
     const btn = $("#btnEnviar");
     btn.disabled = loading;
     btn.classList.toggle("loading", loading);
   };
 
-  /* Iniciar cuando el DOM esté listo */
+  const validarNumeroEmpleado = async (numero) => {
+    const info = $("#nombreEmpleado");
+    empleadoValido = false;
+
+    try {
+      const res = await fetch(VALIDACION_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ numeroEmpleado: numero })
+      });
+
+      if (res.ok) {
+        const datos = await res.json();
+        if (datos.nombre) {
+          info.textContent = `👤 ${datos.nombre}`;
+          info.className = "info-box";
+          empleadoValido = true;
+        } else {
+          info.textContent = "❌ Número no encontrado.";
+          info.className = "error";
+        }
+      } else {
+        info.textContent = "⚠️ Error al validar el número.";
+        info.className = "error";
+      }
+    } catch (err) {
+      console.error(err);
+      info.textContent = "⚠️ Error de conexión.";
+      info.className = "error";
+    }
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
     configurarFlatpickr("multiple");
 
@@ -45,7 +73,16 @@
     const inputNumero = $("#NumeroJDE");
     const inputEmail = $("#Email");
 
-    /* Envío del formulario */
+    inputNumero.addEventListener("blur", () => {
+      const numero = inputNumero.value.trim();
+      if (/^\d{6}$/.test(numero)) {
+        validarNumeroEmpleado(numero);
+      } else {
+        $("#nombreEmpleado").textContent = "";
+        empleadoValido = false;
+      }
+    });
+
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -53,13 +90,17 @@
       const fechas = $("#Fechas").value.trim();
       const correo = inputEmail.value.trim();
 
-      // Validaciones HTML + JS para mostrar mensajes accesibles
       if (!/^\d{6}$/.test(numeroEmpleado)) {
         inputNumero.setCustomValidity("Formato inválido");
         inputNumero.reportValidity();
         return;
       } else {
         inputNumero.setCustomValidity("");
+      }
+
+      if (!empleadoValido) {
+        mostrarMensaje("❌ Número de empleado no válido.", "error");
+        return;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
@@ -69,13 +110,13 @@
       } else {
         inputEmail.setCustomValidity("");
       }
-      
+
       if (!fechas) {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
         return;
       }
 
-      $("#FechasSolicitadas").value = fechas; // por si backend lo necesita
+      $("#FechasSolicitadas").value = fechas;
 
       const body = {
         empleado: numeroEmpleado,
@@ -96,6 +137,8 @@
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
           fp.clear();
+          $("#nombreEmpleado").textContent = "";
+          empleadoValido = false;
         } else {
           mostrarMensaje(`❌ Error al enviar la solicitud (${res.status}).`, "error");
         }
@@ -108,3 +151,4 @@
     });
   });
 })();
+
