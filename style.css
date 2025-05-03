@@ -79,38 +79,50 @@ h2 {
 }
 
 .info-icon {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 8px;
-  width: 18px;
-  height: 18px;
-  background-color: #555;
-  color: white;
+  width: 20px;
+  height: 20px;
+  background-color: #ddd;
+  color: #000;
   border-radius: 50%;
   font-size: 12px;
-  line-height: 18px;
-  text-align: center;
   font-weight: bold;
   cursor: help;
   position: relative;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+.info-icon:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Tooltip */
 .tooltip .tooltip-text {
   visibility: hidden;
   opacity: 0;
   width: 240px;
-  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.85);
   color: #fff;
   text-align: left;
-  border-radius: 6px;
-  padding: 8px;
+  border-radius: 8px;
+  padding: 10px 12px;
   position: absolute;
   z-index: 10;
   bottom: 135%;
   left: 50%;
-  transform: translateX(-50%);
-  transition: opacity 0.3s;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   font-size: 0.85rem;
-  line-height: 1.2;
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
 .tooltip .tooltip-text::after {
@@ -121,16 +133,17 @@ h2 {
   margin-left: -6px;
   border-width: 6px;
   border-style: solid;
-  border-color: #333 transparent transparent transparent;
+  border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
 }
 
-/* Mostrar al hacer hover o focus */
+/* Mostrar tooltip */
 .info-icon:hover .tooltip-text,
 .info-icon:focus .tooltip-text {
   visibility: visible;
   opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
-
 
 label {
   display: block;
