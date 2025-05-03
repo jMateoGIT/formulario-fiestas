@@ -74,6 +74,64 @@ h2 {
   margin-top: 0.7rem;
 }
 
+.modo-selector label:first-of-type {
+  margin-top: 0;
+}
+
+.info-icon {
+  display: inline-block;
+  margin-left: 8px;
+  width: 18px;
+  height: 18px;
+  background-color: #555;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  font-weight: bold;
+  cursor: help;
+  position: relative;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: 240px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 10;
+  bottom: 135%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Mostrar al hacer hover o focus */
+.info-icon:hover .tooltip-text,
+.info-icon:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 label {
   display: block;
   margin-top: 0.7rem;
