@@ -81,8 +81,8 @@ function renderizarTabla(solicitudes) {
   const estado = sol.estado?.toLowerCase();
   let claseEstado = "";
 
-  if (estado === "aprobado") claseEstado = "badge badge-aprobado";
-  else if (estado === "rechazado") claseEstado = "badge badge-rechazado";
+  if (estado === "aprobada") claseEstado = "badge badge-aprobado";
+  else if (estado === "rechazada") claseEstado = "badge badge-rechazado";
   else claseEstado = "badge badge-pendiente"; // por defecto: pendiente
 
   return `
