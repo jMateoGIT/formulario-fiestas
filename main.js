@@ -99,12 +99,19 @@ function throttle(fn, limit) {
 
     const inputNumero = $("#NumeroJDE");
     const inputEmail = $("#Email");
+    const inputClave = $("#claveAcceso");
 
-inputNumero.addEventListener("blur", () => {
-  const numero = inputNumero.value.trim();
-  const clave = $("#claveAcceso").value.trim();
-  validarEmpleadoConClave(numero, clave);
-});
+    inputNumero.addEventListener("blur", () => {
+      const numero = inputNumero.value.trim();
+      const clave = inputClave.value.trim();
+      validarEmpleadoConClave(numero, clave);
+    });
+
+    inputClave.addEventListener("blur", () => {
+      const numero = inputNumero.value.trim();
+      const clave = inputClave.value.trim();
+      validarEmpleadoConClave(numero, clave);
+    });
 
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -122,9 +129,11 @@ inputNumero.addEventListener("blur", () => {
         inputNumero.setCustomValidity("");
       }
 
+      await validarEmpleadoConClave(numeroEmpleado, clave);
+
       if (!empleadoValido) {
-        mostrarMensaje("❌ Número de empleado no válido.", "error");
-        return;
+        mostrarMensaje("❌ Número de empleado o clave no válidos.", "error");
+       return;
       }
 
       if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
@@ -140,11 +149,6 @@ inputNumero.addEventListener("blur", () => {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
         return;
       }
-
-      if (!empleadoValido) {
-  mostrarMensaje("❌ Número de empleado o clave no válidos.", "error");
-  return;
-}
 
       $("#FechasSolicitadas").value = fechas;
 
@@ -166,6 +170,7 @@ inputNumero.addEventListener("blur", () => {
         if (res.status === 200 || res.status === 202) {
           mostrarMensaje("✅ Solicitud enviada correctamente.");
           e.target.reset();
+          inputClave.value = "";
           fp.clear();
           $("#nombreEmpleado").textContent = "";
           empleadoValido = false;
