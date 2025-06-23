@@ -4,9 +4,8 @@
   const $ = (sel) => document.querySelector(sel);
 
   const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
-  const VALIDACION_ENDPOINT = "https://prod-26.westus.logic.azure.com:443/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Ug-PTmDMvZnr5JSdDUgHYwiUl_FLIYETu95kh8bfxs";
-  const clave = document.getElementById("claveAcceso").value.trim();
-  
+  const VALIDACION_ENDPOINT = "https://prod-40.westus.logic.azure.com:443/workflows/ccfa085e953040e0bd375ce228f1bd81/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fwxAql7wt_ZS-aEMrjquaHx7fFJAMLxufUkMwoxCjtA";
+
   let fp;
   let empleadoValido = false;
 
@@ -33,37 +32,53 @@
     btn.classList.toggle("loading", loading);
   };
 
-  const validarNumeroEmpleado = async (numero) => {
-    const info = $("#nombreEmpleado");
-    empleadoValido = false;
+const validarEmpleadoConClave = async (numero, clave) => {
+  const info = $("#nombreEmpleado");
+  empleadoValido = false;
 
-    try {
-      const res = await fetch(VALIDACION_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ numeroEmpleado: numero, clave })
-      });
+  if (!/^\d{6}$/.test(numero)) {
+    info.textContent = "❌ Número inválido";
+    info.className = "info-box";
+    return;
+  }
 
-      if (res.ok) {
-        const resVal = await validacion.json();
-        if (resVal.valido) {
-          info.textContent = "✅ Usuario correcto";
-          info.className = "info-box";
-          empleadoValido = true;
-        } else {
-          info.textContent = "❌ Usuario o clave incorrecta";
-          info.className = "info-box";
-        }
-      } else {
-        info.textContent = "⚠️ Error al validar el usuario";
-        info.className = "info-box";
-      }
-    } catch (err) {
-      console.error(err);
-      info.textContent = "⚠️ Error de conexión";
+  if (!clave) {
+    info.textContent = "❌ Debes introducir la clave";
+    info.className = "info-box";
+    return;
+  }
+
+  info.textContent = "🔐 Validando acceso...";
+  info.className = "info-box";
+
+  try {
+    const res = await fetch("https://prod-26.westus.logic.azure.com:443/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Ug-PTmDMvZnr5JSdDUgHYwiUl_FLIYETu95kh8bfxs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ numeroEmpleado: numero, clave })
+    });
+
+    if (!res.ok) {
+      info.textContent = "❌ Clave incorrecta o usuario no válido";
+      return;
+    }
+
+    const datos = await res.json();
+    if (datos.valido) {
+      info.textContent = "✅ Acceso validado";
+      info.className = "info-box";
+      empleadoValido = true;
+    } else {
+      info.textContent = "❌ Usuario o clave incorrecta";
       info.className = "info-box";
     }
-  };
+  } catch (err) {
+    console.error(err);
+    info.textContent = "⚠️ Error de conexión";
+    info.className = "info-box";
+  }
+};
+
 
 function throttle(fn, limit) {
   let lastCall = 0;
@@ -85,15 +100,11 @@ function throttle(fn, limit) {
     const inputNumero = $("#NumeroJDE");
     const inputEmail = $("#Email");
 
-    inputNumero.addEventListener("blur", () => {
-      const numero = inputNumero.value.trim();
-      if (/^\d{6}$/.test(numero)) {
-        validarNumeroEmpleado(numero);
-      } else {
-        $("#nombreEmpleado").textContent = "";
-        empleadoValido = false;
-      }
-    });
+inputNumero.addEventListener("blur", () => {
+  const numero = inputNumero.value.trim();
+  const clave = $("#claveAcceso").value.trim();
+  validarEmpleadoConClave(numero, clave);
+});
 
     $("#formFiestas").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -101,6 +112,7 @@ function throttle(fn, limit) {
       const numeroEmpleado = inputNumero.value.trim();
       const fechas = $("#Fechas").value.trim();
       const correo = inputEmail.value.trim();
+      const clave = $("#claveAcceso").value.trim();
 
       if (!/^\d{6}$/.test(numeroEmpleado)) {
         inputNumero.setCustomValidity("Formato inválido");
@@ -128,6 +140,11 @@ function throttle(fn, limit) {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
         return;
       }
+
+      if (!empleadoValido) {
+  mostrarMensaje("❌ Número de empleado o clave no válidos.", "error");
+  return;
+}
 
       $("#FechasSolicitadas").value = fechas;
 
