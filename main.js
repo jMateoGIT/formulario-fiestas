@@ -45,8 +45,8 @@
       });
 
       if (res.ok) {
-        const datos = await res.json();
-        if (datos.nombre) {
+        const resVal = await validacion.json();
+        if (resVal.valido) {
           info.textContent = "✅ Usuario correcto";
           info.className = "info-box";
           empleadoValido = true;
