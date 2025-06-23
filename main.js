@@ -4,7 +4,7 @@
   const $ = (sel) => document.querySelector(sel);
 
   const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
-  const VALIDACION_ENDPOINT = "https://prod-40.westus.logic.azure.com:443/workflows/ccfa085e953040e0bd375ce228f1bd81/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fwxAql7wt_ZS-aEMrjquaHx7fFJAMLxufUkMwoxCjtA";
+  const VALIDACION_ENDPOINT = "https://prod-26.westus.logic.azure.com:443/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Ug-PTmDMvZnr5JSdDUgHYwiUl_FLIYETu95kh8bfxs";
 
   let fp;
   let empleadoValido = false;
@@ -40,26 +40,26 @@
       const res = await fetch(VALIDACION_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ numeroEmpleado: numero })
+        body: JSON.stringify({ numeroEmpleado: numero, clave })
       });
 
       if (res.ok) {
         const datos = await res.json();
         if (datos.nombre) {
-          info.textContent = "✅ Número correcto";
+          info.textContent = "✅ Usuario correcto";
           info.className = "info-box";
           empleadoValido = true;
         } else {
-          info.textContent = "❌ Número no encontrado.";
+          info.textContent = "❌ Usuario o clave incorrecta";
           info.className = "info-box";
         }
       } else {
-        info.textContent = "⚠️ Error al validar el número.";
+        info.textContent = "⚠️ Error al validar el usuario";
         info.className = "info-box";
       }
     } catch (err) {
       console.error(err);
-      info.textContent = "⚠️ Error de conexión.";
+      info.textContent = "⚠️ Error de conexión";
       info.className = "info-box";
     }
   };
