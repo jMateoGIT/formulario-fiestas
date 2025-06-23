@@ -25,7 +25,7 @@
       <h2>Solicitud Fiestas Pagadas</h2>
 
       <form id="formFiestas" autocomplete="off" novalidate>
-        <label for="NumeroJDE">Número de empleado:</label>
+        <label for="NumeroJDE">Número de empleado: <span class="asterisco">*</span></label>
         <input id="NumeroJDE"
                name="FakeNameEmpleado"
                type="text"
@@ -36,11 +36,11 @@
                aria-describedby="nombreEmpleado"/>
         <p id="nombreEmpleado" class="info-box" aria-live="polite"></p>
 
-        <label for="Email">Correo electrónico:</label>
+        <label for="Email">Correo electrónico: <span class="asterisco">**</span></label>
         <input id="Email" name="email" type="email" placeholder="Inserte correo si quiere ser notificado"/>
 
         <fieldset class="modo-selector">
-          <legend>Modo de selección:</legend>
+          <legend>Modo de selección: <span class="asterisco">*</span></legend>
         
           <label class="tooltip">
             <input type="radio" name="modo" id="modoMultiple" checked/> Fechas individuales
@@ -62,7 +62,7 @@
         </fieldset>
         
 
-        <label for="Fechas">Fechas solicitadas:</label>
+        <label for="Fechas">Fechas solicitadas: <span class="asterisco">*</span></label>
         <input id="Fechas"
                name="FakeNameFechas"
                type="text"
@@ -79,10 +79,16 @@
           <span class="btn-spinner" aria-hidden="true"></span>
         </button>
         <p class="consent-msg">
-          Al enviar la solicitud, aceptas que la dirección de correo electrónico proporcionada será almacenada únicamente con fines de comunicación relacionados con este formulario.
+          <span class="asterisco">*</span> Campo obligatorio
+          <br/>
+          <span class="asterisco" style="display:inline-block; margin-top:0.6rem;">**</span> El correo electrónico facilitado será utilizado únicamente con la finalidad de remitirle la respuesta a su solicitud. Si no desea comunicar una dirección de correo electrónico podrá consultar el estado de su solicitud a través de la propia plataforma
         </p>
        
         <p id="respuesta" aria-live="polite"></p>
+        <p class="consulta-link">
+         <a href="consulta.html" class="btn-consulta">Consultar estado de mi solicitud</a>
+        </p>
+
       </form>
     </section>
   </main>
