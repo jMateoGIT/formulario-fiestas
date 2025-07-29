@@ -16,8 +16,7 @@
       dateFormat: "d/m/Y",
       locale: flatpickr.l10ns.es,
       allowInput: true,
-      conjunction: ", ",
-      maxDate: "2026-01-31"
+      conjunction: ", "
     });
   };
 
