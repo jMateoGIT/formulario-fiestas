@@ -4,6 +4,9 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
   const msg = document.getElementById("msgLogin");
   const resultadosBox = document.getElementById("resultadosBox");
 
+  const SOLICITUD_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/229d484cf71c410d96dc286bd3fbdf07/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mDNZPUiBTNNTUYUouFO2FZMAwL7VDN-JTH6anebILrA";
+  const VALIDACION_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=IaFHWuonAy-_UJPJe6l4vnZwh2bF3w6Fkf9XmI_LDdc";
+
   if (!/^\d{6}$/.test(numero)) {
     msg.textContent = "❌ Número inválido";
     return;
@@ -18,7 +21,7 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
 
   try {
     // PRIMER FLUJO: Validar empleado
-    const validacion = await fetch("https://prod-26.westus.logic.azure.com:443/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Ug-PTmDMvZnr5JSdDUgHYwiUl_FLIYETu95kh8bfxs", {
+    const validacion = await fetch(VALIDACION_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ numeroEmpleado: numero, clave })
@@ -38,7 +41,7 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
     msg.textContent = "📄 Obteniendo solicitudes...";
 
     // SEGUNDO FLUJO: Obtener solicitudes
-    const solicitudes = await fetch("https://prod-37.westus.logic.azure.com:443/workflows/229d484cf71c410d96dc286bd3fbdf07/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FmdFNSh43VrfyX2io4UqtDJmRZIaJVRiz9uEhfSpFUI", {
+    const solicitudes = await fetch(SOLICITUD_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ numeroEmpleado: numero })

@@ -3,8 +3,8 @@
 
   const $ = (sel) => document.querySelector(sel);
 
-  const ENDPOINT = "https://prod-70.westus.logic.azure.com:443/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vm-UQaC9QxujqKMk7hAj3phQ_lAOF60hxczY9lzVpqE";
-  const VALIDACION_ENDPOINT = "https://prod-40.westus.logic.azure.com:443/workflows/ccfa085e953040e0bd375ce228f1bd81/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fwxAql7wt_ZS-aEMrjquaHx7fFJAMLxufUkMwoxCjtA";
+  const PETICION_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/2035cd8f81154fcc9743ba4b231a1a3f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AFFYihiPJ4YIJu7FPOwlu-Tj1aNc0AkkeuSVV_v7Khs";
+  const VALIDACION_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=IaFHWuonAy-_UJPJe6l4vnZwh2bF3w6Fkf9XmI_LDdc";
 
   let fp;
   let empleadoValido = false;
@@ -53,7 +53,7 @@ const validarEmpleadoConClave = async (numero, clave) => {
   info.className = "info-box";
 
   try {
-    const res = await fetch("https://prod-26.westus.logic.azure.com:443/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Ug-PTmDMvZnr5JSdDUgHYwiUl_FLIYETu95kh8bfxs", {
+    const res = await fetch(VALIDACION_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ numeroEmpleado: numero, clave })
@@ -162,7 +162,7 @@ function throttle(fn, limit) {
 
       try {
         toggleLoading(true);
-        const res = await fetch(ENDPOINT, {
+        const res = await fetch(PETICION_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
