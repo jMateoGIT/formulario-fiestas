@@ -4,8 +4,8 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
   const msg = document.getElementById("msgLogin");
   const resultadosBox = document.getElementById("resultadosBox");
 
-  const SOLICITUD_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/229d484cf71c410d96dc286bd3fbdf07/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mDNZPUiBTNNTUYUouFO2FZMAwL7VDN-JTH6anebILrA";
-  const VALIDACION_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=IaFHWuonAy-_UJPJe6l4vnZwh2bF3w6Fkf9XmI_LDdc";
+  const SOLICITUD_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/229d484cf71c410d96dc286bd3fbdf07/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h95XkrdCRv0ZLBN4qm2leDEKQ8uOC8y6KEGOq_9RKT0";
+  const VALIDACION_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ed2a2c35aabe4e49924cea99b944b27c/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mk7U39gRRcKGJ97_Y6yJPT-QDWaz4UIecrtF28U1pEI";
 
   if (!/^\d{6}$/.test(numero)) {
     msg.textContent = "❌ Número inválido";
@@ -102,3 +102,4 @@ function renderizarTabla(solicitudes) {
   </table>
   `;
 }
+
