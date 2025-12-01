@@ -17,7 +17,7 @@
       locale: flatpickr.l10ns.es,
       allowInput: true,
       conjunction: ", ",
-      maxDate: "31/12/2025"
+      maxDate: "31/12/2026"
     });
   };
 
