@@ -25,71 +25,67 @@
       <h2>Solicitud Fiestas Pagadas</h2>
 
       <form id="formFiestas" autocomplete="off" novalidate>
-        <label for="NumeroJDE">Número de empleado: <span class="asterisco">*</span></label>
-        <input id="NumeroJDE"
-               name="FakeNameEmpleado"
-               type="text"
-               pattern="\d{6}"
-               inputmode="numeric"
-               placeholder="Inserte número de empleado (6 dígitos)"
-               required
-               aria-describedby="nombreEmpleado"/>
+
+
+        <label for="numeroJDE">Número de empleado: <span class="asterisco">*</span></label>
+        <input
+          type="text"
+          id="numeroJDE"
+          name="employee_id"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          placeholder="Inserte número de empleado (6 dígitos)"
+        />
+
         <label for="claveAcceso">Clave de acceso: <span class="asterisco">*</span></label>
-        <input type="password" id="claveAcceso" placeholder="Introduce tu clave personal" />
+        <input
+          type="password"
+          id="claveAcceso"
+          name="access_key"
+          autocomplete="new-password"
+          placeholder="Introduce tu clave personal"
+        />
+
 
         <p id="nombreEmpleado" class="info-box" aria-live="polite"></p>
 
-        <label for="Email">Correo electrónico: <span class="asterisco">**</span></label>
-        <input id="Email" name="email" type="email" placeholder="Inserte correo si quiere ser notificado"/>
+        <label for="email">Correo electrónico: <span class="asterisco">**</span></label>
+        <input id="email" name="email" type="email" placeholder="Inserte correo si quiere ser notificado"/>
 
-        <fieldset class="modo-selector">
-          <legend>Modo de selección: <span class="asterisco">*</span></legend>
-        
-          <label class="tooltip">
-            <input type="radio" name="modo" id="modoMultiple" checked/> Fechas individuales
-            <span class="info-icon" tabindex="0">i
-              <span class="tooltip-text">
-                Selección de uno o varios días sueltos o consecutivos, con opción de aprobar cada uno por separado.
-              </span>
-            </span>
-          </label>
-        
-          <label class="tooltip">
-            <input type="radio" name="modo" id="modoRango"/> Rango de fechas
-            <span class="info-icon" tabindex="0">i
-              <span class="tooltip-text">
-                Selección de un intervalo continuo de días, cuya aprobación se realiza de forma conjunta.
-              </span>
-            </span>
-          </label>
-        </fieldset>
-        
+        <label for="fechas">Fechas solicitadas: <span class="asterisco">*</span></label>
+        <input
+          id="fechas"
+          name="fechaSolicitada"
+          type="text"
+          autocomplete="off"
+          inputmode="none"
+          placeholder="Selecciona las fechas deseadas"
+          required
+        />
 
-        <label for="Fechas">Fechas solicitadas: <span class="asterisco">*</span></label>
-        <input id="Fechas"
-               name="FakeNameFechas"
-               type="text"
-               placeholder="Selecciona las fechas deseadas"
-               required/>
-
-        <input id="FechasSolicitadas" name="FechasSolicitadas" type="hidden"/>
-
-        <label for="Comentario">Comentario:</label>
-        <textarea id="Comentario" name="comentarioExtra"  rows="4"></textarea>
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentarioExtra"  rows="4"></textarea>
 
         <button id="btnEnviar" type="submit">
           <span class="btn-text">Enviar solicitud</span>
           <span class="btn-spinner" aria-hidden="true"></span>
         </button>
+
+        <p id="respuesta" aria-live="polite"></p>
+        
         <p class="consent-msg">
           <span class="asterisco">*</span> Campo obligatorio
           <br/>
           <span class="asterisco" style="display:inline-block; margin-top:0.6rem;">**</span> El correo electrónico facilitado será utilizado únicamente con la finalidad de remitirle la respuesta a su solicitud. Si no desea comunicar una dirección de correo electrónico podrá consultar el estado de su solicitud a través de la propia plataforma
-        </p>
-       
-        <p id="respuesta" aria-live="polite"></p>
+        </p>       
+
         <p class="consulta-link">
          <a href="consulta.html" class="btn-consulta">Consultar estado de mi solicitud</a>
+        </p>
+
+        <p class="consulta-link">
+         <a href="npeticiones.html" class="btn-consulta">Consultar número de peticiones diario</a>
         </p>
 
       </form>

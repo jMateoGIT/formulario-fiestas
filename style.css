@@ -2,7 +2,7 @@
   --color-primary: #5F2167;
   --color-accent: #DA291C;
   --color-bg: #f4f4f4;
-  --color-text: #54585A;
+  --color-text: #2b2b2b;
   --color-surface: #ffffff;
 }
 
@@ -76,87 +76,6 @@ h2 {
   margin-top: 0;
 }
 
-.modo-selector {
-  margin-top: 0.7rem;
-}
-
-.modo-selector label:first-of-type {
-  margin-top: 0;
-}
-
-.info-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 8px;
-  width: 20px;
-  height: 20px;
-  background-color: #ddd;
-  color: #000;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: help;
-  position: relative;
-  transition: background-color 0.3s, color 0.3s, transform 0.2s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.info-icon:hover {
-  background-color: var(--color-primary);
-  color: #fff;
-  transform: scale(1.05);
-}
-
-/* Tooltip */
-.tooltip .tooltip-text {
-  visibility: hidden;
-  opacity: 0;
-  width: 240px;
-  background-color: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  text-align: left;
-  border-radius: 8px;
-  padding: 10px 12px;
-  position: absolute;
-  z-index: 10;
-  bottom: 135%;
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  font-weight: 400;
-  letter-spacing: 0.2px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-.tooltip .tooltip-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -6px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
-}
-
-/* Mostrar tooltip */
-.info-icon:hover .tooltip-text,
-.info-icon:focus .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-label {
-  display: block;
-  margin-top: 0.7rem;
-  font-weight: bold;
-}
-
 .info-box {
   margin-top: 0.5rem;
   font-size: 0.8rem;
@@ -165,6 +84,13 @@ label {
   border-radius: 6px;
   min-height: 1.4rem;
 }
+
+label {
+  display: block;
+  margin-top: 0.7rem;
+  font-weight: bold;
+}
+
 
 input[type="text"],
 input[type="email"],
@@ -230,7 +156,7 @@ button:active {
 
 /* ---------- Footer ---------- */
 footer {
-  background: #f0f0f0;
+  background: #e2e2e2;
   padding: 1.5rem 1rem;
   font-size: 0.85rem;
   text-align: center;
@@ -292,6 +218,11 @@ footer a { color: var(--color-accent); }
   transform: scale(1.02);
 }
 
+#btnConsultar:hover {
+  background-color: #451750; /* tono más oscuro del morado principal */
+  transform: scale(1.02);
+}
+
 /* ---------- Tabla de Solicitudes ---------- */
 
 .tabla-solicitudes {
@@ -327,6 +258,55 @@ footer a { color: var(--color-accent); }
 .tabla-solicitudes td:nth-child(3) {
   font-weight: bold;
   color: var(--color-accent);
+}
+
+/* ---------- Tabla de NPeticiones ---------- */
+
+.tabla-npeticiones {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-npeticiones th {
+  background-color: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.tabla-npeticiones td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla-npeticiones tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabla-npeticiones tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Resaltar fila del propio empleado */
+.tabla-npeticiones tr.row-self {
+  background-color: #c8f7c5; /* verde claro */
+}
+
+.tabla-npeticiones tr.row-self td {
+  font-weight: 630;
+}
+
+.tabla-npeticiones tr.row-self:hover {
+  background-color: #b7efb2; /* un poco más oscuro al hover */}
+
+.tabla-npeticiones tr.row-self td:first-child {
+  box-shadow: inset 4px 0 0 #28a745;
 }
 
 /*Badge styles for solicitud status */

@@ -9,28 +9,16 @@
   let fp;
   let empleadoValido = false;
 
-  const configurarFlatpickr = (mode = "multiple") => {
-    if (fp) fp.destroy();
-    fp = flatpickr("#Fechas", {
-      mode,
-      dateFormat: "d/m/Y",
-      locale: flatpickr.l10ns.es,
-      allowInput: true,
-      conjunction: ", ",
-      maxDate: "31/12/2026"
-    });
+  const toggleLoading = (loading = true) => {
+    const btn = $("#btnEnviar");
+    btn.disabled = loading;
+    btn.classList.toggle("loading", loading);
   };
 
   const mostrarMensaje = (msg, tipo = "success") => {
     const respuesta = $("#respuesta");
     respuesta.textContent = msg;
     respuesta.className = tipo;
-  };
-
-  const toggleLoading = (loading = true) => {
-    const btn = $("#btnEnviar");
-    btn.disabled = loading;
-    btn.classList.toggle("loading", loading);
   };
 
 const validarEmpleadoConClave = async (numero, clave) => {
@@ -92,14 +80,32 @@ function throttle(fn, limit) {
   };
 }
 
+
   document.addEventListener("DOMContentLoaded", () => {
-    configurarFlatpickr("multiple");
+    fp = flatpickr("#fechas", {
+      mode: "multiple",
+      dateFormat: "Y-m-d",     // backend
+      altInput: true,
+      altFormat: "d/m/Y",      // visual
+      locale: flatpickr.l10ns.es,
+      allowInput: true,
+      conjunction: ", ",
+      minDate: new Date().fp_incr(7),
+      maxDate: "2026-12-31",
 
-    $("#modoMultiple").addEventListener("change", () => configurarFlatpickr("multiple"));
-    $("#modoRango").addEventListener("change", () => configurarFlatpickr("range"));
+      onReady: (sel, str, instance) => {
+        // ✅ evitar autocomplete raro en el input visible
+        if (instance.altInput) {
+          instance.altInput.setAttribute("autocomplete", "off");
+          instance.altInput.setAttribute("inputmode", "none");
+          instance.altInput.setAttribute("name", "requested_dates_visible");
+          instance.altInput.setAttribute("spellcheck", "false");
+        }
+      }
+    });
 
-    const inputNumero = $("#NumeroJDE");
-    const inputEmail = $("#Email");
+    const inputNumero = $("#numeroJDE");
+    const inputEmail = $("#email");
     const inputClave = $("#claveAcceso");
 
     inputNumero.addEventListener("blur", () => {
@@ -118,7 +124,7 @@ function throttle(fn, limit) {
       e.preventDefault();
 
       const numeroEmpleado = inputNumero.value.trim();
-      const fechas = $("#Fechas").value.trim();
+      const fechas = $("#fechas").value.trim();
       const correo = inputEmail.value.trim();
       const clave = $("#claveAcceso").value.trim();
 
@@ -149,15 +155,13 @@ function throttle(fn, limit) {
       if (!fechas) {
         mostrarMensaje("❌ Debes seleccionar una o más fechas.", "error");
         return;
-      }
-
-      $("#FechasSolicitadas").value = fechas;
+      }      
 
       const body = {
         empleado: numeroEmpleado,
         email: correo,
         fechasSolicitadas: fechas,
-        comentario: $("#Comentario").value.trim()
+        comentario: $("#comentario").value.trim()
       };
 
       try {

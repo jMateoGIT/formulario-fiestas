@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Consulta de Peticiones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+  <!-- Flatpickr (igual que en index) -->
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.css" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://unpkg.com/flatpickr@4.6.13/dist/l10n/es.js" crossorigin="anonymous" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <img src="avanza_logo.png" alt="Logo Avanza" />
+    <h1 class="site-title">Consulta de Peticiones – Taller Avanza Zaragoza</h1>
+  </header>
+
+  <main class="page-content">
+    <section class="form-container">
+      <h2>Consulta de peticiones</h2>
+
+      <label for="numEmpleado">Número de empleado:</label>
+      <input type="text" id="numEmpleado" maxlength="6" inputmode="numeric"  placeholder="Ej. 123456" />
+
+      <label for="claveAcceso">Clave de acceso:</label>
+      <input type="password" id="claveAcceso" placeholder="Introduce tu clave personal" />
+
+      <label for="fechaConsulta">Seleccione fecha a consultar:</label>
+      
+      <input
+        type="text"
+        id="fechaConsulta"
+        name="FakeNameFechas"
+        placeholder="Selecciona una fecha"
+      required/>
+
+        <button id="btnConsultar" type="button">
+          <span class="btn-text">Consultar fecha</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      <p id="msgFecha" class="info-box" aria-live="polite"></p>
+
+      <div id="resultadosBox" style="display: none;">
+        <h3 id="tituloPeticiones" style="margin-bottom: 0.5rem;">Peticiones</h3>
+        <div id="tablaPeticiones"></div>
+      </div>
+
+      <p class="consulta-link">
+        <a href="index.html" class="btn-consulta">Volver</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <address>
+      <p style="color: var(--color-accent); font-weight: bold;">Mantenimiento Taller de Zaragoza</p>
+      <p>Dirección Urbanos Zaragoza · Miguel Servet, 199 – 50013 Zaragoza</p>
+      <p>📞 976 413 900 · ✉️ <a href="mailto:mantenimiento.zaragoza@mobilityado.com">mantenimiento.zaragoza@mobilityado.com</a></p>
+      <p>🌐 <a href="https://zaragoza.avanzagrupo.com" target="_blank" rel="noopener">zaragoza.avanzagrupo.com</a></p>
+    </address>
+  </footer>
+
+  <script src="npeticiones.js" defer></script>
+</body>
+</html>
