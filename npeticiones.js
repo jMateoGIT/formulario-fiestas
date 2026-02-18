@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     altFormat: "d/m/Y",    // formato visual
     locale: flatpickr.l10ns.es,
     allowInput: true,
+    minDate: "2026-01-01",
     maxDate: "2026-12-31"
   });
 });
