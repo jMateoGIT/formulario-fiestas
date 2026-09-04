@@ -10,6 +10,9 @@
   --row-self-bg: #c8f7c5;
   --row-self-hover-bg: #b7efb2;
   --info-box-bg: #eee;
+  --color-primary-text: var(--color-primary);
+  --color-accent-text: var(--color-accent);
+  --color-muted: #666;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +26,10 @@
     --row-self-bg: #234d29;
     --row-self-hover-bg: #2c5c34;
     --info-box-bg: #333;
+    /* Versiones más claras para texto legible sobre fondos oscuros */
+    --color-primary-text: #c58fd1;
+    --color-accent-text: #ff6f61;
+    --color-muted: #999;
   }
 }
 
@@ -83,7 +90,7 @@ body {
 
 h2 {
   text-align: center;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   margin-bottom: 1.5rem;
   margin-top: 0;
 }
@@ -163,8 +170,8 @@ button:active {
 }
 
 /* Mensajes */
-.success { color: var(--color-primary); font-weight: bold; margin-top: 1rem; text-align: center; }
-.error { color: var(--color-accent); font-weight: bold; margin-top: 1rem; text-align: center; }
+.success { color: var(--color-primary-text); font-weight: bold; margin-top: 1rem; text-align: center; }
+.error { color: var(--color-accent-text); font-weight: bold; margin-top: 1rem; text-align: center; }
 
 /* ---------- Footer ---------- */
 footer {
@@ -174,7 +181,7 @@ footer {
   text-align: center;
 }
 
-footer a { color: var(--color-accent); }
+footer a { color: var(--color-accent-text); }
 
 /* ---------- Adaptativo ---------- */
 @media screen and (max-width: 600px) {
@@ -191,7 +198,7 @@ footer a { color: var(--color-accent); }
 
 .consent-msg {
   font-size: 0.7rem;
-  color: #666;
+  color: var(--color-muted);
   margin-top: 0.8rem;
   text-align: left;
   font-style: italic;
