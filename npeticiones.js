@@ -84,7 +84,7 @@ document.getElementById("btnConsultar").addEventListener("click", async () => {
     const peticiones = await fetch(NPETICIONES_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fecha })
+      body: JSON.stringify({ numeroEmpleado: numero, fecha })
     });
 
 if (!peticiones.ok) {
