@@ -84,8 +84,13 @@ document.getElementById("btnConsultar").addEventListener("click", async () => {
     const peticiones = await fetch(NPETICIONES_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero, fecha })
+      body: JSON.stringify({ numeroEmpleado: numero, clave, fecha })
     });
+
+if (peticiones.status === 401) {
+  msg.textContent = "❌ Clave incorrecta o usuario no válido.";
+  return;
+}
 
 if (!peticiones.ok) {
   const raw = await peticiones.text().catch(() => "");

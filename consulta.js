@@ -44,8 +44,13 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
     const solicitudes = await fetch(SOLICITUD_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero })
+      body: JSON.stringify({ numeroEmpleado: numero, clave })
     });
+
+    if (solicitudes.status === 401) {
+      msg.textContent = "❌ Clave incorrecta o usuario no válido";
+      return;
+    }
 
     if (!solicitudes.ok) {
       msg.textContent = "❌ Error al obtener las solicitudes";
