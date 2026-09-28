@@ -159,6 +159,7 @@ function throttle(fn, limit) {
 
       const body = {
         empleado: numeroEmpleado,
+        clave,
         email: correo,
         fechasSolicitadas: fechas,
         comentario: $("#comentario").value.trim()
@@ -179,6 +180,10 @@ function throttle(fn, limit) {
           fp.clear();
           $("#nombreEmpleado").textContent = "";
           empleadoValido = false;
+        } else if (res.status === 401) {
+          mostrarMensaje("❌ La clave no es correcta para ese número de empleado.", "error");
+        } else if (res.status === 400) {
+          mostrarMensaje("❌ Revisa el número, las fechas y el correo.", "error");
         } else {
           mostrarMensaje(`❌ Error al enviar la solicitud (${res.status}).`, "error");
         }
