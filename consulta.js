@@ -1,4 +1,9 @@
-document.getElementById("btnAcceder").addEventListener("click", async () => {
+// Guarda de "petición en curso": del primer clic a la respuesta, botón desactivado y
+// cualquier otro clic ignorado (antes un doble clic lanzaba dos consultas a la vez).
+const btnAcceder = document.getElementById("btnAcceder");
+const conGuarda = FPRed.guarda(btnAcceder, "Enviando…");
+
+btnAcceder.addEventListener("click", () => {
   const numero = document.getElementById("numEmpleado").value.trim();
   const clave = document.getElementById("claveAcceso").value.trim();
   const msg = document.getElementById("msgLogin");
@@ -17,47 +22,60 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
     return;
   }
 
-  msg.textContent = "🔐 Validando acceso...";
+  const sinRespuesta = (err) => {
+    console.error(err);
+    msg.textContent = err.tipo === "tiempo"
+      ? "⚠️ El servicio no ha respondido a tiempo. Inténtalo de nuevo en unos minutos."
+      : "⚠️ Error de conexión";
+  };
+  const alTardar = () => {
+    msg.textContent = "⏳ El servicio está tardando más de lo habitual (puede llevar hasta un minuto)…";
+  };
 
-  try {
-    // PRIMER FLUJO: Validar empleado
-    const validacion = await fetch(VALIDACION_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero, clave })
-    });
+  conGuarda(async () => {
+    msg.textContent = "🔐 Validando acceso...";
+
+    // PRIMER FLUJO: Validar empleado (una sola llamada, sin reintentos)
+    let validacion;
+    try {
+      validacion = await FPRed.postJson(VALIDACION_ENDPOINT, { numeroEmpleado: numero, clave }, { alTardar });
+    } catch (err) {
+      sinRespuesta(err);
+      return;
+    }
 
     if (!validacion.ok) {
       msg.textContent = "❌ Clave incorrecta o usuario no válido";
       return;
     }
 
-    const resVal = await validacion.json();
-    if (!resVal.valido) {
+    if (!validacion.datos || !validacion.datos.valido) {
       msg.textContent = "❌ Usuario o clave incorrecta";
       return;
     }
 
     msg.textContent = "📄 Obteniendo solicitudes...";
 
-    // SEGUNDO FLUJO: Obtener solicitudes
-    const solicitudes = await fetch(SOLICITUD_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero, clave })
-    });
+    // SEGUNDO FLUJO: Obtener solicitudes (una sola llamada, sin reintentos)
+    let solicitudes;
+    try {
+      solicitudes = await FPRed.postJson(SOLICITUD_ENDPOINT, { numeroEmpleado: numero, clave }, { alTardar });
+    } catch (err) {
+      sinRespuesta(err);
+      return;
+    }
 
     if (solicitudes.status === 401) {
       msg.textContent = "❌ Clave incorrecta o usuario no válido";
       return;
     }
 
-    if (!solicitudes.ok) {
+    if (!solicitudes.ok || !Array.isArray(solicitudes.datos)) {
       msg.textContent = "❌ Error al obtener las solicitudes";
       return;
     }
 
-    const datos = await solicitudes.json();
+    const datos = solicitudes.datos;
     if (datos.length === 0) {
       msg.textContent = "⚠️ No hay solicitudes registradas.";
       return;
@@ -67,10 +85,7 @@ document.getElementById("btnAcceder").addEventListener("click", async () => {
     document.getElementById("loginBox").style.display = "none";
     resultadosBox.style.display = "block";
     renderizarTabla(datos);
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "⚠️ Error de conexión";
-  }
+  });
 });
 
 function renderizarTabla(solicitudes) {

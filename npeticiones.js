@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ---------- Botón consultar ----------
-document.getElementById("btnConsultar").addEventListener("click", async () => {
+// Guarda de "petición en curso": del primer clic a la respuesta, botón desactivado y
+// cualquier otro clic ignorado. Cada flujo recibe una sola llamada, sin reintentos.
+const btn = document.getElementById("btnConsultar");
+const conGuarda = FPRed.guarda(btn, "Enviando…");
+
+btn.addEventListener("click", () => {
 
   const numero = document.getElementById("numEmpleado").value.trim();
   const clave = document.getElementById("claveAcceso").value.trim();
@@ -26,7 +31,6 @@ document.getElementById("btnConsultar").addEventListener("click", async () => {
   const msg = document.getElementById("msgFecha");
   const resultadosBox = document.getElementById("resultadosBox");
   const tablaCont = document.getElementById("tablaPeticiones");
-  const btn = document.getElementById("btnConsultar");
 
   const NPETICIONES_ENDPOINT = "https://defaulte75a677e41004431b89ee574d8d990.10.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5dbbacbc7cb948debbf8952366f637ad/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=f3wF-ipqfNKZ3DRoQwi1UKHr55--i3lF-FYyZZZCQwQ";
 
@@ -53,27 +57,34 @@ document.getElementById("btnConsultar").addEventListener("click", async () => {
     return;
   }
 
-  btn.disabled = true;
-  btn.classList.add("loading");
+  const sinRespuesta = (err) => {
+    console.error(err);
+    msg.textContent = err.tipo === "tiempo"
+      ? "⚠️ El servicio no ha respondido a tiempo. Inténtalo de nuevo en unos minutos."
+      : "⚠️ Error de conexión.";
+  };
+  const alTardar = () => {
+    msg.textContent = "⏳ El servicio está tardando más de lo habitual (puede llevar hasta un minuto)…";
+  };
 
-  try {
+  conGuarda(async () => {
     // 1️⃣ Validación usuario
     msg.textContent = "🔐 Validando acceso...";
 
-    const validacion = await fetch(VALIDACION_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero, clave })
-    });
+    let validacion;
+    try {
+      validacion = await FPRed.postJson(VALIDACION_ENDPOINT, { numeroEmpleado: numero, clave }, { alTardar });
+    } catch (err) {
+      sinRespuesta(err);
+      return;
+    }
 
     if (!validacion.ok) {
       msg.textContent = "❌ Clave incorrecta o usuario no válido.";
       return;
     }
 
-    const resVal = await validacion.json();
-
-    if (!resVal.valido) {
+    if (!validacion.datos || !validacion.datos.valido) {
       msg.textContent = "❌ Usuario o clave incorrecta.";
       return;
     }
@@ -81,45 +92,39 @@ document.getElementById("btnConsultar").addEventListener("click", async () => {
     // 2️⃣ Consulta peticiones
     msg.textContent = "📄 Obteniendo peticiones...";
 
-    const peticiones = await fetch(NPETICIONES_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ numeroEmpleado: numero, clave, fecha })
-    });
+    let peticiones;
+    try {
+      peticiones = await FPRed.postJson(NPETICIONES_ENDPOINT, { numeroEmpleado: numero, clave, fecha }, { alTardar });
+    } catch (err) {
+      sinRespuesta(err);
+      return;
+    }
 
-if (peticiones.status === 401) {
-  msg.textContent = "❌ Clave incorrecta o usuario no válido.";
-  return;
-}
+    if (peticiones.status === 401) {
+      msg.textContent = "❌ Clave incorrecta o usuario no válido.";
+      return;
+    }
 
-if (!peticiones.ok) {
-  const raw = await peticiones.text().catch(() => "");
-  console.error("NPeticiones HTTP", peticiones.status, raw);
-  msg.textContent = `❌ Error HTTP ${peticiones.status} (ver consola).`;
-  return;
-}
+    if (!peticiones.ok) {
+      console.error("NPeticiones HTTP", peticiones.status, peticiones.datos);
+      msg.textContent = `❌ Error HTTP ${peticiones.status} (ver consola).`;
+      return;
+    }
 
-    const datos = await peticiones.json();
+    const datos = peticiones.datos;
 
     if (!Array.isArray(datos) || datos.length === 0) {
       msg.textContent = "⚠️ No hay peticiones para esa fecha.";
       return;
     }
 
-    msg.textContent = "";    
+    msg.textContent = "";
     document.getElementById("tituloPeticiones").textContent =
-  `Peticiones — ${fechaVisual}`;
+      `Peticiones — ${fechaVisual}`;
 
     resultadosBox.style.display = "block";
     renderizarTabla(datos);
-
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "⚠️ Error de conexión.";
-  } finally {
-    btn.disabled = false;
-    btn.classList.remove("loading");
-  }
+  });
 });
 
 // ---------- Tabla ----------
