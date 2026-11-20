@@ -24,8 +24,11 @@
         <label for="claveAcceso">Clave de acceso:</label>
         <input type="password" id="claveAcceso" placeholder="Introduce tu clave personal" />
 
-        <button id="btnAcceder">Acceder</button>
-        <p id="msgLogin" class="info-box"></p>
+        <button id="btnAcceder" type="button">
+          <span class="btn-text">Acceder</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+        <p id="msgLogin" class="info-box" aria-live="polite"></p>
       </div>
 
       <div id="resultadosBox" style="display: none;">
@@ -49,6 +52,7 @@
     </address>
   </footer>
 
+  <script src="red.js" defer></script>
   <script src="consulta.js" defer></script>
 </body>
 </html>

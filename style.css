@@ -161,7 +161,6 @@ button:active {
   margin-left: 8px;
 }
 
-.loading .btn-text { opacity: 0;}
 .loading .btn-spinner { display: inline-block; }
 
 @keyframes spin {
